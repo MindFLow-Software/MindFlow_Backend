@@ -1,0 +1,195 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(uuid())
+  userId            String  @unique @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+enum Expertise {
+  OTHER
+  SOCIAL
+  INFANT
+  CLINICAL
+  JURIDICAL
+  EDUCATIONAL
+  ORGANIZATIONAL
+  PSYCHOTHERAPIST
+  NEUROPSYCHOLOGY
+}
+
+enum Role {
+  ADMIN
+  PATIENT
+  PSYCHOLOGIST
+}
+
+enum Gender {
+  OTHER
+  FEMININE
+  MASCULINE
+}
+
+model User {
+  id              String   @id @default(uuid())
+  firstName       String   @map("first_name")
+  lastName        String   @map("last_name")
+  email           String?  @unique
+  password        String?
+  phoneNumber     String   @db.VarChar(20)
+  isActive        Boolean  @default(false) @map("is_Active")
+  profileImageUrl String?  @map("profile_image_url")
+  crp             String?  @unique @db.VarChar(10)
+  dateOfBrith     DateTime @map("date_of_birth")
+  cpf             String   @unique @db.VarChar(11)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  role      Role      @default(PSYCHOLOGIST)
+  gender    Gender
+  account   Account?
+  expertise Expertise
+
+  payment              Payment?
+  attachmentUploadedBy Attachment[] @relation("attachment_uploaded_by")
+  patientAttachment    Attachment[] @relation("patient_medical_attatchment")
+
+  patientAppointment      Appointment[] @relation("patient_appointment")
+  psychologistAppointment Appointment[] @relation("psychologist_attatchment")
+
+  @@map("users")
+}
+
+enum AppointmentStatus {
+  SCHEDULED
+  ATTENDING
+  FINISHED
+  CANCELED
+  NOT_ATTEND
+  RESCHEDULED
+}
+
+model Appointment {
+  id             String  @id @default(uuid())
+  patientId      String? @map("patient_id")
+  psychologistId String? @map("psychologist_id")
+
+  diagnosis     String
+  notes         String?
+  scheduledAt   DateTime  @default(now()) @map("scheduled_at")
+  startedAt     DateTime? @map("started_at")
+  endedAt       DateTime? @map("ended_at")
+  durationInMin Int?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  status AppointmentStatus @default(SCHEDULED)
+
+  patient      User? @relation("patient_appointment", fields: [patientId], references: [id])
+  psychologist User? @relation("psychologist_attatchment", fields: [psychologistId], references: [id])
+
+  @@map("appointments")
+}
+
+model Attachment {
+  id         String @id @default(uuid())
+  patientId  String @map("patient_id")
+  uploaderId String @map("uploader_id")
+
+  filename    String
+  SizeInBytes Int      @map("size_in_bytes")
+  contentType String   @map("content_type")
+  sessionDate DateTime @map("session_date")
+  fileUrl     String   @map("file_url")
+
+  uploadedAt DateTime @default(now()) @map("uploaded_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+
+  patient    User @relation("patient_medical_attatchment", fields: [patientId], references: [id])
+  uploadedBy User @relation("attachment_uploaded_by", fields: [uploaderId], references: [id])
+
+  @@map("attachments")
+}
+
+enum PlanInterval {
+  MONTHLY
+  YEARLY
+}
+
+model SubscriptionPlan {
+  id           String   @id @default(uuid())
+  name         String   @unique
+  description  String[]
+  priceInCents Int      @map("price_in_cents")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  payment  Payment[]
+  interval PlanInterval @default(MONTHLY)
+
+  @@map("subscription_plans")
+}
+
+enum PaymentStatus {
+  PAYED
+  PENDING
+  NOT_PAYED
+}
+
+enum PaymentMethod {
+  PIX
+}
+
+enum PaymentFrequency {
+  MONTHLY
+  YEARLY
+}
+
+model Payment {
+  id                 String @id @default(uuid())
+  psychologistId     String @unique @map("psychologist_id")
+  subscriptionPlanId String @map("subscription_plan_id")
+
+  amount     Int
+  paidAt     DateTime? @map("paid_at")
+  expiresAt  DateTime? @map("expires_at")
+  externalId String?   @map("external_id")
+
+  // attempts Int @default(0)
+
+  createdAt DateTime @default(now()) @map("created_At")
+
+  status           PaymentStatus    @default(NOT_PAYED)
+  paymentMethod    PaymentMethod    @default(PIX) @map("payment_method")
+  paymentFrequency PaymentFrequency @default(MONTHLY) @map("payment_frequency")
+
+  psychologist     User             @relation(fields: [psychologistId], references: [id])
+  subscriptionPlan SubscriptionPlan @relation(fields: [subscriptionPlanId], references: [id])
+
+  @@map("payments")
+}

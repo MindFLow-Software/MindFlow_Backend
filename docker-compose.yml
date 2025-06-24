@@ -1,0 +1,13 @@
+services:
+  postgres:
+    container_name: mindflow
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: mindflow
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: mindflow_db
+      PGDATA: /data/postgres
+    volumes:
+      - ./data/pg:/data/postgres
