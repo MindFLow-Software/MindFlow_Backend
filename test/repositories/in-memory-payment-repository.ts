@@ -19,7 +19,7 @@ export class InMemoryPaymentRepository implements PaymentRepository {
   }
 
   async delete(id: string): Promise<void> {
-    this.payments.filter((payment) => payment.id !== id)
+    this.payments = this.payments.filter((payment) => payment.id !== id)
   }
 
   async findMany(): Promise<Payment[]> {

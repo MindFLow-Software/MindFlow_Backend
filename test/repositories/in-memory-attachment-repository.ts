@@ -19,7 +19,9 @@ export class InMemoryAttachmentRepository implements AttachmentRepository {
   }
 
   async delete(id: string): Promise<void> {
-    this.Attachments.filter((attachment) => attachment.id === id)
+    this.Attachments = this.Attachments.filter(
+      (attachment) => attachment.id === id,
+    )
   }
 
   async findById(id: string): Promise<Attachment | null> {

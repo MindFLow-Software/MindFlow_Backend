@@ -19,7 +19,7 @@ export class InMemoryPatientRespository implements PatientRepository {
   }
 
   async delete(id: string): Promise<void> {
-    this.patients.filter((patient) => patient.id !== id)
+    this.patients = this.patients.filter((patient) => patient.id !== id)
   }
 
   async findByCpf(cpf: string): Promise<Patient | null> {

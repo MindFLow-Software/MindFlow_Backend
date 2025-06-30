@@ -19,7 +19,9 @@ export class InMemoryPsychologistRespository implements PsychologistRepository {
   }
 
   async delete(id: string): Promise<void> {
-    this.psychologists.filter((psychologist) => psychologist.id !== id)
+    this.psychologists = this.psychologists.filter(
+      (psychologist) => psychologist.id !== id,
+    )
   }
 
   async findById(id: string): Promise<Psychologist | null> {

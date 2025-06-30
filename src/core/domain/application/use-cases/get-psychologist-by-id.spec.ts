@@ -5,7 +5,7 @@ import { makePsychologist } from 'test/factories/make-psychologist'
 let inMemoryPsychologistRepository: InMemoryPsychologistRespository
 let sut: GetPsychologistByIdUseCase
 
-describe('[GET]:PSYCHOLOGIST', () => {
+describe('[GET]:PSYCHOLOGIST:ID', () => {
   beforeEach(() => {
     inMemoryPsychologistRepository = new InMemoryPsychologistRespository()
     sut = new GetPsychologistByIdUseCase(inMemoryPsychologistRepository)

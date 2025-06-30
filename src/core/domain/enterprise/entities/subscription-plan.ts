@@ -1,5 +1,6 @@
 import { Optional } from '@/_types/optional'
 import { Entity } from '@/core/entities/entity'
+import { randomUUID } from 'node:crypto'
 
 export enum PlanInterval {
   MONTHLY = 'MONTHLY',
@@ -45,14 +46,17 @@ export class SubscriptionPlan extends Entity<IsubscriptionPlan> {
     return this.props.updatedAt
   }
 
-  static create(props: Optional<IsubscriptionPlan, 'createdAt' | 'updatedAt'>) {
+  static create(
+    props: Optional<IsubscriptionPlan, 'id' | 'createdAt' | 'updatedAt'>,
+  ) {
     const plan = new SubscriptionPlan({
       ...props,
+      id: props.id || randomUUID(),
       interval: props.interval || PlanInterval.MONTHLY,
       createdAt: props.createdAt || new Date(),
       updatedAt: props.updatedAt || new Date(),
     })
 
-    return plan.props
+    return plan
   }
 }

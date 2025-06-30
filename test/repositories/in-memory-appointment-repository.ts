@@ -17,7 +17,9 @@ export class InMemoryAppointmentRepository implements AppointmentRepository {
   }
 
   async delete(id: string): Promise<void> {
-    this.appointments.filter((appointment) => appointment.id !== id)
+    this.appointments = this.appointments.filter(
+      (appointment) => appointment.id !== id,
+    )
   }
 
   async findById(id: string): Promise<Appointment | null> {

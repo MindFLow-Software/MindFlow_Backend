@@ -21,7 +21,7 @@ export class InMemorySubscriptionPlanRepository
   }
 
   async delete(id: string): Promise<void> {
-    this.subscriptionPlans.filter(
+    this.subscriptionPlans = this.subscriptionPlans.filter(
       (subscriptionplan) => subscriptionplan.id !== id,
     )
   }
