@@ -7,7 +7,7 @@ type IfetchAppointmentRequest = {
 }
 
 type IfetchAppointmentResponse = {
-  Appointment: Appointment[]
+  appointments: Appointment[]
 }
 
 export class FetchAppointmentsUseCase {
@@ -17,14 +17,14 @@ export class FetchAppointmentsUseCase {
     pageIndex,
     perPage,
   }: IfetchAppointmentRequest): Promise<IfetchAppointmentResponse> {
-    const Appointments = await this.AppointmentRepository.findMany({
+    const appointments = await this.AppointmentRepository.findMany({
       pageIndex,
       perPage,
       orderBy: 'asc',
     })
 
     return {
-      Appointment: Appointments,
+      appointments,
     }
   }
 }

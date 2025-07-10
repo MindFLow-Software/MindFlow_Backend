@@ -27,9 +27,6 @@ export type Iappointment = {
 }
 
 export class Appointment extends Entity<Iappointment> {
-  toJSON(): any {
-    throw new Error('Method not implemented.')
-  }
   get id() {
     return this.props.id
   }
