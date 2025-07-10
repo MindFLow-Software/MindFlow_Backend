@@ -1,5 +1,6 @@
 import { Optional } from '@/_types/optional'
 import { Entity } from '@/core/entities/entity'
+import { randomUUID } from 'crypto'
 
 export enum AppointmentStatus {
   SCHEDULED = 'SCHEDULED',
@@ -74,13 +75,16 @@ export class Appointment extends Entity<Iappointment> {
     return this.props.updatedAt
   }
 
-  static create(props: Optional<Iappointment, 'createdAt' | 'updatedAt'>) {
+  static create(
+    props: Optional<Iappointment, 'id' | 'createdAt' | 'updatedAt'>,
+  ) {
     const appointment = new Appointment({
       ...props,
+      id: props.id || randomUUID(),
       createdAt: props.createdAt || new Date(),
       updatedAt: props.updatedAt || new Date(),
     })
 
-    return appointment.props
+    return appointment
   }
 }

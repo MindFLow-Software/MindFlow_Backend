@@ -61,6 +61,6 @@ export class Attachment extends Entity<Iattachment> {
       updatedAt: props.updatedAt || new Date(),
     })
 
-    return attachment.props
+    return attachment
   }
 }
