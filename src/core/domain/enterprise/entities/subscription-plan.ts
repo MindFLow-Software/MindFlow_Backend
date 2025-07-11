@@ -18,6 +18,7 @@ export type IsubscriptionPlan = {
 }
 
 export class SubscriptionPlan extends Entity<IsubscriptionPlan> {
+  static id: any
   get id() {
     return this.props.id
   }
