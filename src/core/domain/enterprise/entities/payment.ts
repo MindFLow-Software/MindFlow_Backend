@@ -83,6 +83,6 @@ export class Payment extends Entity<Ipayment> {
       createdAt: props.createdAt || new Date(),
     })
 
-    return payment.props
+    return payment
   }
 }

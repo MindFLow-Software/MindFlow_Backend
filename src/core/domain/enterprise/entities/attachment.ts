@@ -1,5 +1,6 @@
 import { Optional } from '@/_types/optional'
 import { Entity } from '@/core/entities/entity'
+import { randomUUID } from 'node:crypto'
 
 export type Iattachment = {
   id: string
@@ -9,7 +10,7 @@ export type Iattachment = {
   SizeInBytes: number
   contentType: string
   sessionDate: Date
-  fileUrl: string
+  fileUrl: string | null
   uploadedAt: Date
   updatedAt: Date
 }
@@ -17,6 +18,10 @@ export type Iattachment = {
 export class Attachment extends Entity<Iattachment> {
   get id() {
     return this.props.id
+  }
+
+  set patientId(newPatientId: string) {
+    this.props.patientId = newPatientId
   }
 
   get patientId() {
@@ -43,6 +48,10 @@ export class Attachment extends Entity<Iattachment> {
     return this.props.sessionDate
   }
 
+  set fileUrl(newUrl: string | null) {
+    this.props.fileUrl = newUrl
+  }
+
   get fileUrl() {
     return this.props.fileUrl
   }
@@ -55,12 +64,16 @@ export class Attachment extends Entity<Iattachment> {
     return this.props.updatedAt
   }
 
-  static create(props: Optional<Iattachment, 'updatedAt'>) {
+  static create(
+    props: Optional<Iattachment, 'id' | 'patientId' | 'updatedAt'>,
+  ) {
     const attachment = new Attachment({
       ...props,
+      id: props.id || randomUUID(),
+      patientId: props.patientId || randomUUID(),
       updatedAt: props.updatedAt || new Date(),
     })
 
-    return attachment.props
+    return attachment
   }
 }

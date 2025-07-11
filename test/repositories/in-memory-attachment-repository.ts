@@ -10,32 +10,36 @@ export class InMemoryAttachmentRepository implements AttachmentRepository {
     this.Attachments.push(attachment)
   }
 
-  async save(attachment: Attachment): Promise<void> {
-    const attachmentToUpdateIndex = this.Attachments.findIndex(
-      ({ id }) => id === attachment.id,
-    )
-
-    this.Attachments[attachmentToUpdateIndex] = attachment
+  async createMany(attachments: Attachment[]) {
+    this.Attachments.push(...attachments)
   }
 
-  async delete(id: string): Promise<void> {
-    this.Attachments = this.Attachments.filter(
-      (attachment) => attachment.id === id,
-    )
-  }
+  // async save(attachment: Attachment): Promise<void> {
+  //   const attachmentToUpdateIndex = this.Attachments.findIndex(
+  //     ({ id }) => id === attachment.id,
+  //   )
 
-  async findById(id: string): Promise<Attachment | null> {
-    return this.Attachments.find((attachment) => attachment.id === id) || null
-  }
+  //   this.Attachments[attachmentToUpdateIndex] = attachment
+  // }
 
-  async findByUser(userId: string): Promise<Attachment | null> {
-    return (
-      this.Attachments.find((attachment) => attachment.patientId === userId) ||
-      null
-    )
-  }
+  // async delete(id: string): Promise<void> {
+  //   this.Attachments = this.Attachments.filter(
+  //     (attachment) => attachment.id === id,
+  //   )
+  // }
 
-  async findMany(): Promise<Attachment[]> {
-    return this.Attachments
-  }
+  // async findById(id: string): Promise<Attachment | null> {
+  //   return this.Attachments.find((attachment) => attachment.id === id) || null
+  // }
+
+  // async findByUser(userId: string): Promise<Attachment | null> {
+  //   return (
+  //     this.Attachments.find((attachment) => attachment.patientId === userId) ||
+  //     null
+  //   )
+  // }
+
+  // async findMany(): Promise<Attachment[]> {
+  //   return this.Attachments
+  // }
 }

@@ -74,7 +74,7 @@ model User {
   expertise Expertise
 
   payment              Payment?
-  attachmentUploadedBy Attachment[] @relation("attachment_uploaded_by")
+  uploadedByAttachment Attachment[] @relation("uploaded_by_attachment")
   patientAttachment    Attachment[] @relation("patient_medical_attatchment")
 
   patientAppointment      Appointment[] @relation("patient_appointment")
@@ -130,7 +130,7 @@ model Attachment {
   updatedAt  DateTime @updatedAt @map("updated_at")
 
   patient    User @relation("patient_medical_attatchment", fields: [patientId], references: [id])
-  uploadedBy User @relation("attachment_uploaded_by", fields: [uploaderId], references: [id])
+  uploadedBy User @relation("uploaded_by_attachment", fields: [uploaderId], references: [id])
 
   @@map("attachments")
 }
