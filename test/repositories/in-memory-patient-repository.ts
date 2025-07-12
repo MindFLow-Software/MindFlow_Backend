@@ -1,6 +1,8 @@
 import { PatientRepository } from '@/core/domain/application/repositories/patient-repository'
 import { Patient } from '@/core/domain/enterprise/entities/patient'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class InMemoryPatientRespository implements PatientRepository {
   public patients: Patient[] = []
 

@@ -1,6 +1,8 @@
 import { SubscriptionPlanRepository } from '@/core/domain/application/repositories/subscription-plan-repository'
 import { SubscriptionPlan } from '@/core/domain/enterprise/entities/subscription-plan'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class InMemorySubscriptionPlanRepository
   implements SubscriptionPlanRepository
 {
