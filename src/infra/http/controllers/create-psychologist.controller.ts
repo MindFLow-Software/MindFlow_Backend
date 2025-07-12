@@ -1,9 +1,19 @@
-import { Body, Controller, Post } from '@nestjs/common'
+import {
+  Body,
+  ConflictException,
+  Controller,
+  Post,
+  UsePipes,
+} from '@nestjs/common'
 
 import { z } from 'zod'
 import { ZodValidationPipe } from '@/pipes/zod-validation-pipe'
 
 import { CreatePsychologistUseCase } from '@/core/domain/application/use-cases/create-psychologist'
+
+import { PrismaService } from 'src/infra/database/prisma/prisma.service'
+
+import { hash } from 'bcryptjs'
 
 import {
   Expertise,
@@ -37,6 +47,7 @@ export class CreatePsychologistController {
   constructor(private createPsychologist: CreatePsychologistUseCase) {}
 
   @Post()
+  @UsePipes(new ZodValidationPipe(createPsychologistBodySchema))
   async handle(@Body(createUserValidationPipe) body: IcreatePsychologist) {
     const {
       firstName,
@@ -54,11 +65,22 @@ export class CreatePsychologistController {
       expertise,
     } = body
 
+    const psychologistWithSameEmail =
+      await PrismaService.instance.psychologist.findUnique({
+        where: { email },
+      })
+
+    if (psychologistWithSameEmail) {
+      throw new ConflictException('Psychologist with this email already exists')
+    }
+
+    const hashedPassword = password ? await hash(password, 10) : undefined
+
     this.createPsychologist.execute({
       firstName,
       lastName,
       email,
-      password,
+      password: hashedPassword,
       phoneNumber,
       isActive,
       profileImageUrl,
