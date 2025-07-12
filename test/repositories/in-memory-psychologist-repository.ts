@@ -1,6 +1,8 @@
 import { PsychologistRepository } from '@/core/domain/application/repositories/psychologist-repository'
 import { Psychologist } from '@/core/domain/enterprise/entities/psychologist'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class InMemoryPsychologistRespository implements PsychologistRepository {
   public psychologists: Psychologist[] = []
 

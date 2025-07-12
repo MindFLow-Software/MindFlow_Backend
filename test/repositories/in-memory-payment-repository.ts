@@ -1,6 +1,8 @@
 import { PaymentRepository } from '@/core/domain/application/repositories/payment-repository'
 import { Payment } from '@/core/domain/enterprise/entities/payment'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class InMemoryPaymentRepository implements PaymentRepository {
   public payments: Payment[] = []
 

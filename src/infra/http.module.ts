@@ -1,21 +1,33 @@
 import { Module } from '@nestjs/common'
 
+// modules
 import { AuthModule } from 'src/infra/auth/auth.module'
-import { DatabaseModule } from './database/prisma/database.module'
 
-import { CreatePsychologistController } from '@/infra/http/controllers/create-psychologist.controller'
-
+// controllers
+import { AuthenticateController } from './http/controllers/authenticate.controller'
 import { CreatePatientController } from './http/controllers/create-patient.controller'
-import { CreatePsychologistUseCase } from '@/core/domain/application/use-cases/create-psychologist'
+import { CreatePsychologistController } from '@/infra/http/controllers/create-psychologist.controller'
 import { GetPsychologistByIdController } from './http/controllers/get-psychologist-by-id.controller'
 
+// use-cases
+import { AuthenticateUseCase } from '@/core/domain/application/use-cases/authenticate'
+import { CreatePatientUseCase } from '@/core/domain/application/use-cases/create-patient'
+import { CreatePsychologistUseCase } from '@/core/domain/application/use-cases/create-psychologist'
+import { GetPsychologistByIdUseCase } from '@/core/domain/application/use-cases/get-psychologist-by-id'
+
 @Module({
-  imports: [AuthModule, DatabaseModule],
+  imports: [AuthModule],
   controllers: [
-    CreatePsychologistController,
+    AuthenticateController,
     CreatePatientController,
+    CreatePsychologistController,
     GetPsychologistByIdController,
   ],
-  providers: [CreatePsychologistUseCase],
+  providers: [
+    AuthenticateUseCase,
+    CreatePatientUseCase,
+    CreatePsychologistUseCase,
+    GetPsychologistByIdUseCase,
+  ],
 })
 export class HttpModule {}

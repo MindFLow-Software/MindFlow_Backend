@@ -1,6 +1,8 @@
 import { AppointmentRepository } from '@/core/domain/application/repositories/appointment-repository'
 import { Appointment } from '@/core/domain/enterprise/entities/appointment'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class InMemoryAppointmentRepository implements AppointmentRepository {
   public appointments: Appointment[] = []
 
