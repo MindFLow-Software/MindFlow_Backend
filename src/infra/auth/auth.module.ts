@@ -9,6 +9,8 @@ import { Ienv } from '../../validators/env-schema'
 import { AuthenticateController } from '../http/controllers/authenticate.controller'
 import { AuthenticateUseCase } from '@/core/domain/application/use-cases/authenticate'
 
+import { LinkedInStrategy } from './linkedin.strategy';
+
 @Module({
   imports: [
     PassportModule,

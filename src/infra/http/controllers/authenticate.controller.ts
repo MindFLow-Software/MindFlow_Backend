@@ -1,11 +1,23 @@
-import { AuthenticateUseCase } from '@/core/domain/application/use-cases/authenticate'
-import { ZodValidationPipe } from '@/pipes/zod-validation-pipe'
-import { Body, Controller, Post } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Req,
+  Res,
+  UseGuards,
+} from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
+import { AuthGuard } from '@nestjs/passport'
+import { Response } from 'express'
 import z from 'zod'
 
+import { AuthenticateUseCase } from '@/core/domain/application/use-cases/authenticate'
+import { ZodValidationPipe } from '@/pipes/zod-validation-pipe'
+import { PsychologistRepository } from '@/core/domain/application/repositories/psychologist-repository'
+
 const authenticateBodySchema = z.object({
-  email: z.email(),
+  email: z.string().email(),
   password: z.string().min(6),
 })
 
@@ -17,7 +29,8 @@ const authenticateValidationPipe = new ZodValidationPipe(authenticateBodySchema)
 export class AuthenticateController {
   constructor(
     private authenticateUseCase: AuthenticateUseCase,
-    private JWT: JwtService,
+    private jwtService: JwtService,
+    private psychologistsRepository: PsychologistRepository,
   ) {}
 
   @Post()
@@ -29,10 +42,50 @@ export class AuthenticateController {
       password,
     })
 
-    const jwt = await this.JWT.sign({ sub: psychologist?.id })
-
-    return {
-      jwt,
+    if (!psychologist) {
+      throw new Error('Authentication failed: psychologist not found.')
     }
+
+    const jwt = await this.jwtService.signAsync({ sub: psychologist.id })
+
+    return { jwt }
+  }
+
+  @Get('/linkedin')
+  @UseGuards(AuthGuard('linkedin'))
+  async linkedinLogin() {
+  }
+
+  @Get('/linkedin/callback')
+  @UseGuards(AuthGuard('linkedin'))
+  async linkedinCallback(@Req() req, @Res() res: Response) {
+    const linkedInUser = req.user as {
+      id: string
+      name: string
+      email: string
+      avatar?: string
+    }
+
+    let psychologist = await this.psychologistsRepository.findByEmail(linkedInUser.email)
+
+    if (!psychologist) {
+      psychologist = await this.psychologistsRepository.createFromLinkedIn({
+        email: linkedInUser.email,
+        name: linkedInUser.name,
+        avatar: linkedInUser.avatar,
+      })
+    }
+
+    if (!psychologist) {
+      throw new Error('Authentication failed: psychologist not found.')
+    }
+
+    const jwt = await this.jwtService.signAsync({
+      sub: psychologist.id,
+    })
+
+    return res.json({ jwt })
+
+
   }
 }

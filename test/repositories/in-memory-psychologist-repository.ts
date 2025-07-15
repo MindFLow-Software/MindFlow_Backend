@@ -7,6 +7,9 @@ export class InMemoryPsychologistRespository implements PsychologistRepository {
   public psychologists: Psychologist[] = []
 
   constructor() {}
+  createFromLinkedIn(arg0: { email: string; name: string; avatar: string | undefined }): Psychologist | PromiseLike<Psychologist | null> | null {
+    throw new Error('Method not implemented.')
+  }
 
   async create(psychologist: Psychologist): Promise<void> {
     this.psychologists.push(psychologist)
