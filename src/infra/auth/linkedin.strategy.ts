@@ -1,7 +1,6 @@
-// auth/strategies/linkedin.strategy.ts
-import { PassportStrategy } from '@nestjs/passport';
-import { Injectable } from '@nestjs/common';
-import { Strategy } from 'passport-linkedin-oauth2';
+import { PassportStrategy } from '@nestjs/passport'
+import { Injectable } from '@nestjs/common'
+import { Strategy } from 'passport-linkedin-oauth2'
 
 @Injectable()
 export class LinkedInStrategy extends PassportStrategy(Strategy, 'linkedin') {
@@ -21,7 +20,6 @@ export class LinkedInStrategy extends PassportStrategy(Strategy, 'linkedin') {
     profile: any,
     done: Function,
   ) {
-    // Aqui você pode salvar/consultar o usuário no banco
     const user = {
       linkedinId: profile.id,
       name: profile.displayName,
