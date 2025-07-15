@@ -4,6 +4,7 @@ import { AppointmentRepository } from '../repositories/appointment-repository'
 type IfetchAppointmentRequest = {
   pageIndex: number
   perPage: number
+  orderBy?: 'asc' | 'desc'
 }
 
 type IfetchAppointmentResponse = {
@@ -16,11 +17,12 @@ export class FetchAppointmentsUseCase {
   async execute({
     pageIndex,
     perPage,
+    orderBy = 'asc',
   }: IfetchAppointmentRequest): Promise<IfetchAppointmentResponse> {
     const appointments = await this.AppointmentRepository.findMany({
       pageIndex,
       perPage,
-      orderBy: 'asc',
+      orderBy,
     })
 
     return {

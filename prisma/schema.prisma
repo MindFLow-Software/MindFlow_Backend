@@ -121,10 +121,10 @@ model Attachment {
   uploaderId String @map("uploader_id")
 
   filename    String
-  SizeInBytes Int      @map("size_in_bytes")
-  contentType String   @map("content_type")
-  sessionDate DateTime @map("session_date")
-  fileUrl     String   @map("file_url")
+  SizeInBytes Int       @map("size_in_bytes")
+  contentType String    @map("content_type")
+  sessionDate DateTime? @map("session_date")
+  fileUrl     String    @map("file_url")
 
   uploadedAt DateTime @default(now()) @map("uploaded_at")
   updatedAt  DateTime @updatedAt @map("updated_at")

@@ -1,6 +1,7 @@
-import { Optional } from '@/_types/optional'
-import { Entity } from '@/core/entities/entity'
 import { randomUUID } from 'node:crypto'
+
+import { Entity } from '@/core/entities/entity'
+import { Optional } from '@/_types/optional'
 
 export type Iattachment = {
   id: string

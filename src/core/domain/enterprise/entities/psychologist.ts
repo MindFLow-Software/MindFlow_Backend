@@ -3,6 +3,10 @@ import { randomUUID } from 'node:crypto'
 import { Entity } from '@/core/entities/entity'
 import { Optional } from '@/_types/optional'
 
+import { Appointment } from './appointment'
+import { MedicalRecordList } from './medical-records-list'
+import { Payment } from './payment'
+
 export enum PsychologistRole {
   PSYCHOLOGIST = 'PSYCHOLOGIST',
 }
@@ -42,6 +46,9 @@ export type Ipsychologist = {
   role: PsychologistRole
   gender: Gender
   expertise: Expertise
+  paymentId: string | null
+  appointments: Appointment[]
+  medicalRecords: MedicalRecordList
 }
 
 export class Psychologist extends Entity<Ipsychologist> {
@@ -109,16 +116,43 @@ export class Psychologist extends Entity<Ipsychologist> {
     return this.props.expertise
   }
 
+  set paymentId(newPaymentId: string | null) {
+    this.props.paymentId = newPaymentId
+  }
+
+  get paymentId() {
+    return this.props.paymentId
+  }
+
+  set appointments(newAppointments: Appointment[]) {
+    this.props.appointments = newAppointments
+  }
+
+  get appointments() {
+    return this.props.appointments
+  }
+
+  set medicalRecords(newRecords: MedicalRecordList) {
+    this.props.medicalRecords = newRecords
+  }
+
+  get medicalRecords() {
+    return this.props.medicalRecords
+  }
+
   static create(
     props: Optional<
       Ipsychologist,
-      'id' | 'isActive' | 'createdAt' | 'updatedAt'
+      'id' | 'isActive' | 'paymentId' | 'appointments' | 'medicalRecords' | 'createdAt' | 'updatedAt'
     >,
   ) {
     const psychologist = new Psychologist({
       ...props,
       id: props.id || randomUUID(),
       isActive: props.isActive || false,
+      paymentId: props.paymentId || null,
+      appointments: props.appointments || [],
+      medicalRecords: props.medicalRecords || new MedicalRecordList(),
       createdAt: props.createdAt || new Date(),
       updatedAt: props.updatedAt || new Date(),
     })

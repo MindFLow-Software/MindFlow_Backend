@@ -6,6 +6,10 @@ type IfindMany = {
   orderBy: 'asc' | 'desc'
 }
 
+type IfindManyByPsychologist = IfindMany & {
+  psychologistId: string
+}
+
 export abstract class AppointmentRepository {
   abstract create(appointment: Appointment): Promise<void>
   abstract save(appointment: Appointment): Promise<void>
@@ -16,4 +20,10 @@ export abstract class AppointmentRepository {
     perPage,
     orderBy,
   }: IfindMany): Promise<Appointment[]>
+  abstract findManyByPsychologist({
+    pageIndex,
+    perPage,
+    orderBy,
+    psychologistId,
+  }: IfindManyByPsychologist): Promise<Appointment[]>
 }

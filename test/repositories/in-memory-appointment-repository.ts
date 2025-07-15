@@ -55,4 +55,37 @@ export class InMemoryAppointmentRepository implements AppointmentRepository {
         }
       })
   }
+
+  async findManyByPsychologist({
+    pageIndex,
+    perPage,
+    orderBy,
+    psychologistId,
+  }: {
+    pageIndex: number
+    perPage: number
+    orderBy: 'asc' | 'desc'
+    psychologistId: string
+  }): Promise<Appointment[]> {
+    const appointments = await this.appointments
+    .slice(pageIndex * perPage, (pageIndex + 1) * perPage)
+    .filter((appointment) => appointment.psychologistId === psychologistId)
+    .sort((appointmentA, appointmentB) => {
+      if (orderBy === 'desc') {
+        return (
+          appointmentB.scheduledAt.getTime() -
+          appointmentA.scheduledAt.getTime()
+        )
+      } else {
+        return (
+          appointmentA.scheduledAt.getTime() -
+          appointmentB.scheduledAt.getTime()
+        )
+      }
+    })
+
+    console.log('appointments: ', appointments)
+
+    return appointments
+  }
 }
