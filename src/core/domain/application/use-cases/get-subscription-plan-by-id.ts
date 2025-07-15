@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common'
 import { SubscriptionPlan } from '../../enterprise/entities/subscription-plan'
 import { SubscriptionPlanRepository } from '../repositories/subscription-plan-repository'
 
@@ -9,6 +10,7 @@ type IfindSubscriptionPlanByIdResponse = {
   subscriptionPlan: SubscriptionPlan | null
 }
 
+@Injectable()
 export class GetSubscriptionPlanByIdUseCase {
   constructor(private subscriptionPlanRepository: SubscriptionPlanRepository) {}
 

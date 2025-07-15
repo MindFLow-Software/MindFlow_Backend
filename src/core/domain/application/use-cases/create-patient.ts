@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common'
 import { Patient, PatientRole } from '../../enterprise/entities/patient'
 import { PatientRepository } from '../repositories/patient-repository'
 
@@ -17,6 +18,7 @@ type IcreatePatientRequest = {
   profileImageUrl?: string
 }
 
+@Injectable()
 export class CreatePatientUseCase {
   constructor(private patientRepository: PatientRepository) {}
 

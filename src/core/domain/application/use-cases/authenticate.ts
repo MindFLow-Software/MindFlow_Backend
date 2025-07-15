@@ -2,6 +2,7 @@ import { compare } from 'bcryptjs'
 
 import { Psychologist } from '../../enterprise/entities/psychologist'
 import { PsychologistRepository } from '../repositories/psychologist-repository'
+import { Injectable } from '@nestjs/common'
 
 type IauthenticateRequest = {
   email: string
@@ -12,6 +13,7 @@ type IauthenticateRsponse = {
   psychologist: Psychologist | null
 }
 
+@Injectable()
 export class AuthenticateUseCase {
   constructor(private psychologistRepository: PsychologistRepository) {}
 

@@ -1,13 +1,15 @@
+import { Injectable } from '@nestjs/common'
 import { PatientRepository } from '../repositories/patient-repository'
 
 type IdeletePatientRequest = {
-  id: string
+  patientId: string
 }
 
+@Injectable()
 export class DeletePatientUseCase {
   constructor(private patientRepository: PatientRepository) {}
 
-  async execute({ id }: IdeletePatientRequest): Promise<void> {
-    await this.patientRepository.delete(id)
+  async execute({ patientId }: IdeletePatientRequest): Promise<void> {
+    await this.patientRepository.delete(patientId)
   }
 }

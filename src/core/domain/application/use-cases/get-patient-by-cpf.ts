@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common'
 import { Patient } from '../../enterprise/entities/patient'
 import { PatientRepository } from '../repositories/patient-repository'
 
@@ -9,6 +10,7 @@ type IgetPatientByCpfResponse = {
   patient: Patient | null
 }
 
+@Injectable()
 export class GetPatientByCpfUseCase {
   constructor(private patientRepository: PatientRepository) {}
 

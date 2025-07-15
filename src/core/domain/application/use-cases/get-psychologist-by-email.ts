@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common'
 import { Psychologist } from '../../enterprise/entities/psychologist'
 import { PsychologistRepository } from '../repositories/psychologist-repository'
 
@@ -9,6 +10,7 @@ type IgetPsychologistByEmailResponse = {
   psychologist: Psychologist | null
 }
 
+@Injectable()
 export class GetPsychologistByEmailUseCase {
   constructor(private psychologistRepository: PsychologistRepository) {}
 

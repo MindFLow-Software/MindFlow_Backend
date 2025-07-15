@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common'
 import {
   Appointment,
   AppointmentStatus,
@@ -5,7 +6,6 @@ import {
 import { AppointmentRepository } from '../repositories/appointment-repository'
 
 type IcreateAppointmentRequest = {
-  id: string
   patientId: string
   psychologistId: string
   diagnosis: string
@@ -13,12 +13,10 @@ type IcreateAppointmentRequest = {
   scheduledAt: Date
   startedAt?: Date
   endedAt?: Date
-  durationInMin?: number
   status: AppointmentStatus
-  createdAt: Date
-  updatedAt: Date
 }
 
+@Injectable()
 export class CreateAppointmentUseCase {
   constructor(private appointmentRepository: AppointmentRepository) {}
 
@@ -31,7 +29,6 @@ export class CreateAppointmentUseCase {
       scheduledAt: data.scheduledAt,
       startedAt: data.startedAt,
       endedAt: data.endedAt,
-      durationInMin: data.durationInMin,
       status: data.status,
     })
 

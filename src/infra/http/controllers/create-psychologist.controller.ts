@@ -2,24 +2,23 @@ import {
   Body,
   ConflictException,
   Controller,
+  HttpCode,
   Post,
   UsePipes,
 } from '@nestjs/common'
 
 import { z } from 'zod'
+import { hash } from 'bcryptjs'
 import { ZodValidationPipe } from '@/pipes/zod-validation-pipe'
 
-import { CreatePsychologistUseCase } from '@/core/domain/application/use-cases/create-psychologist'
-
 import { PrismaService } from 'src/infra/database/prisma/prisma.service'
-
-import { hash } from 'bcryptjs'
 
 import {
   Expertise,
   PsychologistRole,
 } from '@/core/domain/enterprise/entities/psychologist'
 import { Gender } from '@/_types/enum-gender'
+import { CreatePsychologistUseCase } from '@/core/domain/application/use-cases/create-psychologist'
 
 const createPsychologistBodySchema = z.object({
   firstName: z.string(),
@@ -47,6 +46,7 @@ export class CreatePsychologistController {
   constructor(private createPsychologist: CreatePsychologistUseCase) {}
 
   @Post()
+  @HttpCode(201)
   @UsePipes(new ZodValidationPipe(createPsychologistBodySchema))
   async handle(@Body(createUserValidationPipe) body: IcreatePsychologist) {
     const {

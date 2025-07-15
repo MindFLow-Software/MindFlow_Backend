@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common'
 import { Psychologist } from '../../enterprise/entities/psychologist'
 import { PsychologistRepository } from '../repositories/psychologist-repository'
 
@@ -10,6 +11,7 @@ type IfetchPsychologistResponse = {
   psychologists: Psychologist[]
 }
 
+@Injectable()
 export class FetchPsychologistUseCase {
   constructor(private psychologistRepository: PsychologistRepository) {}
 

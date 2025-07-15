@@ -2,18 +2,19 @@ import {
   Body,
   ConflictException,
   Controller,
+  HttpCode,
   Post,
   UsePipes,
 } from '@nestjs/common'
 
 import { z } from 'zod'
+import { hash } from 'bcryptjs'
 import { ZodValidationPipe } from '@/pipes/zod-validation-pipe'
 
-import { CreatePatientUseCase } from '@/core/domain/application/use-cases/create-patient'
 import { Gender } from '@/_types/enum-gender'
 import { PatientRole } from '@/core/domain/enterprise/entities/patient'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
-import { hash } from 'bcryptjs'
+import { CreatePatientUseCase } from '@/core/domain/application/use-cases/create-patient'
 
 const createPatientBodySchema = z.object({
   firstName: z.string(),
@@ -24,8 +25,8 @@ const createPatientBodySchema = z.object({
   profileImageUrl: z.string().optional(),
   dateOfBrith: z.date(),
   cpf: z.string(),
-  role: z.nativeEnum(PatientRole),
-  gender: z.nativeEnum(Gender),
+  role: z.enum(PatientRole),
+  gender: z.enum(Gender),
 })
 
 const createPatientValidationPipe = new ZodValidationPipe(
@@ -39,6 +40,7 @@ export class CreatePatientController {
   constructor(private createPatient: CreatePatientUseCase) {}
 
   @Post()
+  @HttpCode(201)
   @UsePipes(new ZodValidationPipe(createPatientBodySchema))
   async handle(@Body(createPatientValidationPipe) body: IcreatePatient) {
     const {

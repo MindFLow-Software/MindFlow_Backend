@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto'
 import { Attachment } from '../../enterprise/entities/attachment'
 import { AttachmentRepository } from '../repositories/attachment-repository'
+import { Injectable } from '@nestjs/common'
 
 export enum FileType {
   PNG = 'image/png',
@@ -21,6 +22,7 @@ type IuploadAttachmentRequest = {
   uploaderId: string
 }
 
+@Injectable()
 export class UploadAttachmentUseCase {
   constructor(private attachmentRepository: AttachmentRepository) {}
 

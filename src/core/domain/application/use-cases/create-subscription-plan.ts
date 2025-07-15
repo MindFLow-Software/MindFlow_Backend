@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common'
 import {
   PlanInterval,
   SubscriptionPlan,
@@ -11,6 +12,7 @@ type IcreateSubscriptionPlanRequest = {
   interval: PlanInterval
 }
 
+@Injectable()
 export class CreateSubscriptionPlanUseCase {
   constructor(private subscriptionPlanRepository: SubscriptionPlanRepository) {}
 

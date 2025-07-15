@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common'
 import { Appointment } from '../../enterprise/entities/appointment'
 import { AppointmentRepository } from '../repositories/appointment-repository'
 
@@ -9,6 +10,7 @@ type IgetAppointmentByIdUseCaseResponse = {
   appointment: Appointment | null
 }
 
+@Injectable()
 export class GetAppointmentByIdUseCase {
   constructor(private appoimentRepository: AppointmentRepository) {}
 

@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common'
 import { Patient } from '../../enterprise/entities/patient'
 import { PatientRepository } from '../repositories/patient-repository'
 
@@ -10,6 +11,7 @@ type IfetchPatientsResponse = {
   patients: Patient[]
 }
 
+@Injectable()
 export class FetchPatientsUseCase {
   constructor(private patientRepository: PatientRepository) {}
 
