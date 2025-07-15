@@ -1,6 +1,10 @@
+import { randomUUID } from 'node:crypto'
+
 import { Optional } from '@/_types/optional'
 import { Entity } from '@/core/entities/entity'
-import { randomUUID } from 'node:crypto'
+
+import { Appointment } from './appointment'
+import { MedicalRecordList } from './medical-records-list'
 
 export enum PatientRole {
   PATIENT = 'PATIENT',
@@ -26,6 +30,8 @@ export type Ipatient = {
   updatedAt: Date
   role: PatientRole
   gender: Gender
+  appointments: Appointment[]
+  medicalRecords: MedicalRecordList
 }
 
 export class Patient extends Entity<Ipatient> {
@@ -81,12 +87,31 @@ export class Patient extends Entity<Ipatient> {
     return this.props.gender
   }
 
-  static create(props: Optional<Ipatient, 'id' | 'createdAt' | 'updatedAt'>) {
+    set appointments(newAppointments: Appointment[]) {
+      this.props.appointments = newAppointments
+    }
+  
+    get appointments() {
+      return this.props.appointments
+    }
+  
+
+  set medicalRecords(newRecords: MedicalRecordList) {
+      this.props.medicalRecords = newRecords
+    }
+  
+    get medicalRecords() {
+      return this.props.medicalRecords
+    }
+
+  static create(props: Optional<Ipatient, 'id' | 'appointments' | 'medicalRecords' | 'createdAt' | 'updatedAt'>) {
     const patient = new Patient({
       ...props,
       id: props.id || randomUUID(),
       createdAt: props.createdAt || new Date(),
       updatedAt: props.updatedAt || new Date(),
+      appointments: props.appointments || [],
+      medicalRecords: props.medicalRecords || new MedicalRecordList(),
     })
 
     return patient

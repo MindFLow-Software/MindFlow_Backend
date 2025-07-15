@@ -1,4 +1,4 @@
-import { FetchAppointmentsUseCase } from './fetch-appointment'
+import { FetchAppointmentsUseCase } from './fetch-appointments'
 import { InMemoryAppointmentRepository } from 'test/repositories/in-memory-appointment-repository'
 import { makeAppointment } from 'test/factories/make-appointment'
 import { AppointmentStatus } from '@/core/domain/enterprise/entities/appointment'

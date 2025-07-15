@@ -10,6 +10,7 @@ describe('[POST]:APPOINTMENT', () => {
     inMemoryAppoinmentRepository = new InMemoryAppointmentRepository()
     sut = new CreateAppointmentUseCase(inMemoryAppoinmentRepository)
   })
+
   it('should be able to create an appointment', async () => {
     await sut.execute({
       patientId: 'patient-id',
@@ -25,6 +26,7 @@ describe('[POST]:APPOINTMENT', () => {
       id: '',
       createdAt: new Date(),
     })
+
     expect(inMemoryAppoinmentRepository.appointments[0]).toEqual(
       expect.objectContaining({
         patientId: 'patient-id',

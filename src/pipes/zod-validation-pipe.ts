@@ -1,10 +1,10 @@
 import { PipeTransform, BadRequestException } from '@nestjs/common'
 import { fromZodError } from 'zod-validation-error'
 
-import { ZodError, ZodSchema } from 'zod'
+import { ZodError, ZodType } from 'zod'
 
 export class ZodValidationPipe implements PipeTransform {
-  constructor(private schema: ZodSchema) {}
+  constructor(private schema: ZodType) {}
 
   transform(value: unknown) {
     try {
@@ -13,6 +13,7 @@ export class ZodValidationPipe implements PipeTransform {
     } catch (error) {
       if (error instanceof ZodError) {
         throw new BadRequestException({
+          //  @ts-ignore
           errors: fromZodError(error),
           message: 'Validation failed',
           statusCode: 400,
@@ -23,5 +24,3 @@ export class ZodValidationPipe implements PipeTransform {
     }
   }
 }
-
-// Luis Morato é muito chupa do Diego Fernandes, mas é um cara legal
