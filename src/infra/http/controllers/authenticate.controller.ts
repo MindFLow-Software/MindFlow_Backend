@@ -12,9 +12,9 @@ import { AuthGuard } from '@nestjs/passport'
 import { Response } from 'express'
 import z from 'zod'
 
-import { AuthenticateUseCase } from '@/core/domain/application/use-cases/authenticate'
-import { ZodValidationPipe } from '@/pipes/zod-validation-pipe'
-import { PsychologistRepository } from '@/core/domain/application/repositories/psychologist-repository'
+import { AuthenticateUseCase } from '@/core/domain/main/application/use-cases/authenticate'
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
+import { PsychologistRepository } from '@/core/domain/main/application/repositories/psychologist-repository'
 
 const authenticateBodySchema = z.object({
   email: z.string().email(),
@@ -31,7 +31,7 @@ export class AuthenticateController {
     private authenticateUseCase: AuthenticateUseCase,
     private jwtService: JwtService,
     private psychologistsRepository: PsychologistRepository,
-  ) {}
+  ) { }
 
   @Post()
   async handle(@Body(authenticateValidationPipe) body: IauthenticateBody) {

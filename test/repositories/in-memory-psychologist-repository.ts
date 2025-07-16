@@ -1,12 +1,12 @@
-import { PsychologistRepository } from '@/core/domain/application/repositories/psychologist-repository'
-import { Psychologist } from '@/core/domain/enterprise/entities/psychologist'
+import { PsychologistRepository } from '@/core/domain/main/application/repositories/psychologist-repository'
+import { Psychologist } from '@/core/domain/main/enterprise/entities/psychologist'
 import { Injectable } from '@nestjs/common'
 
 @Injectable()
 export class InMemoryPsychologistRespository implements PsychologistRepository {
   public psychologists: Psychologist[] = []
 
-  constructor() {}
+  constructor() { }
   createFromLinkedIn(arg0: { email: string; name: string; avatar: string | undefined }): Psychologist | PromiseLike<Psychologist | null> | null {
     throw new Error('Method not implemented.')
   }

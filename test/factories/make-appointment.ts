@@ -5,7 +5,7 @@ import {
   Appointment,
   AppointmentStatus,
   Iappointment,
-} from '@/core/domain/enterprise/entities/appointment'
+} from '@/core/domain/main/enterprise/entities/appointment'
 
 export const makeAppointment = async (override: Partial<Iappointment> = {}) => {
   const appointment = Appointment.create({

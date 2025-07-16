@@ -1,9 +1,9 @@
 import { Controller, Get, Param, Query } from '@nestjs/common'
 
 import z from 'zod'
-import { ZodValidationPipe } from '@/pipes/zod-validation-pipe'
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 
-import { FetchAppointmentsByPsychologistIdUseCase } from '@/core/domain/application/use-cases/fetch-appointments-by-psychologist-id'
+import { FetchAppointmentsByPsychologistIdUseCase } from '@/core/domain/main/application/use-cases/fetch-appointments-by-psychologist-id'
 
 const fetchAppointmentsByPsycholgistParamsSchema = z.object({
   psychologistId: z.uuid(),
@@ -28,7 +28,7 @@ const fetchAppointmentsByPsycholgistQueryValidationPipe = new ZodValidationPipe(
 export class FetchAppointmentsByPsychologistIdController {
   constructor(
     private fetchAppointmentsByPsychologistIdUseCase: FetchAppointmentsByPsychologistIdUseCase
-  ) {}
+  ) { }
 
   @Get(':psychologistId')
   async handle(

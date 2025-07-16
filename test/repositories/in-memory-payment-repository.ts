@@ -1,12 +1,12 @@
-import { PaymentRepository } from '@/core/domain/application/repositories/payment-repository'
-import { Payment } from '@/core/domain/enterprise/entities/payment'
+import { PaymentRepository } from '@/core/domain/main/application/repositories/payment-repository'
+import { Payment } from '@/core/domain/main/enterprise/entities/payment'
 import { Injectable } from '@nestjs/common'
 
 @Injectable()
 export class InMemoryPaymentRepository implements PaymentRepository {
   public payments: Payment[] = []
 
-  constructor() {}
+  constructor() { }
 
   async create(payment: Payment): Promise<void> {
     this.payments.push(payment)

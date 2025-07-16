@@ -1,9 +1,9 @@
 import { Controller, Delete, HttpCode, Param } from '@nestjs/common'
 
 import z from 'zod'
-import { ZodValidationPipe } from '@/pipes/zod-validation-pipe'
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 
-import { DeleteSubscriptionPlanUseCase } from '@/core/domain/application/use-cases/delete-subscription-plan'
+import { DeleteSubscriptionPlanUseCase } from '@/core/domain/main/application/use-cases/delete-subscription-plan'
 
 const deleteSubscriptionPlanParamsSchema = z.object({
   planId: z.string(),
@@ -17,7 +17,7 @@ const deleteSubscriptionPlanParamsValidationPipe = new ZodValidationPipe(deleteS
 export class DeleteSubscriptionPlanController {
   constructor(
     private deleteSubscriptionPlanUseCase: DeleteSubscriptionPlanUseCase
-  ) {}
+  ) { }
 
   @Delete(':planId')
   @HttpCode(204)

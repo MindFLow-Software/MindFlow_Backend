@@ -1,14 +1,13 @@
-import { SubscriptionPlanRepository } from '@/core/domain/application/repositories/subscription-plan-repository'
-import { SubscriptionPlan } from '@/core/domain/enterprise/entities/subscription-plan'
+import { SubscriptionPlanRepository } from '@/core/domain/main/application/repositories/subscription-plan-repository'
+import { SubscriptionPlan } from '@/core/domain/main/enterprise/entities/subscription-plan'
 import { Injectable } from '@nestjs/common'
 
 @Injectable()
 export class InMemorySubscriptionPlanRepository
-  implements SubscriptionPlanRepository
-{
+  implements SubscriptionPlanRepository {
   public subscriptionPlans: SubscriptionPlan[] = []
 
-  constructor() {}
+  constructor() { }
 
   async create(subscriptionplan: SubscriptionPlan): Promise<void> {
     this.subscriptionPlans.push(subscriptionplan)

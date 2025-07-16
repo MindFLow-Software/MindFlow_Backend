@@ -1,8 +1,8 @@
 import { Controller, Get, Query } from '@nestjs/common'
 
-import { FetchAppointmentsUseCase } from '@/core/domain/application/use-cases/fetch-appointments'
+import { FetchAppointmentsUseCase } from '@/core/domain/main/application/use-cases/fetch-appointments'
 import z from 'zod'
-import { ZodValidationPipe } from '@/pipes/zod-validation-pipe'
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 
 const fetchAppointmentsQuerySchema = z.object({
   pageIndex: z.coerce.number().default(0),
@@ -18,7 +18,7 @@ const fetchAppointmentsQueryValidationPipe = new ZodValidationPipe(fetchAppointm
 export class FetchAppointmentsController {
   constructor(
     private fetchAppointmentsUseCase: FetchAppointmentsUseCase
-  ) {}
+  ) { }
 
   @Get()
   async handle(@Query(fetchAppointmentsQueryValidationPipe) query: IfetchAppointmentsQuery) {

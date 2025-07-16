@@ -1,12 +1,12 @@
-import { PatientRepository } from '@/core/domain/application/repositories/patient-repository'
-import { Patient } from '@/core/domain/enterprise/entities/patient'
+import { PatientRepository } from '@/core/domain/main/application/repositories/patient-repository'
+import { Patient } from '@/core/domain/main/enterprise/entities/patient'
 import { Injectable } from '@nestjs/common'
 
 @Injectable()
 export class InMemoryPatientRespository implements PatientRepository {
   public patients: Patient[] = []
 
-  constructor() {}
+  constructor() { }
 
   async create(patient: Patient): Promise<void> {
     this.patients.push(patient)

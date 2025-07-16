@@ -1,10 +1,10 @@
 import { Body, Controller, HttpCode, Post } from '@nestjs/common'
 
 import z from 'zod'
-import { ZodValidationPipe } from '@/pipes/zod-validation-pipe'
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 
-import { PlanInterval } from '@/core/domain/enterprise/entities/subscription-plan'
-import { CreateSubscriptionPlanUseCase } from '@/core/domain/application/use-cases/create-subscription-plan'
+import { PlanInterval } from '@/core/domain/main/enterprise/entities/subscription-plan'
+import { CreateSubscriptionPlanUseCase } from '@/core/domain/main/application/use-cases/create-subscription-plan'
 
 const createSubscriptionPlanBodySchema = z.object({
   name: z.string(),
@@ -21,7 +21,7 @@ const createSubscriptionPlanValidationPipe = new ZodValidationPipe(createSubscri
 export class CreateSubscriptionPlanController {
   constructor(
     private createSubscriptionPlanUseCase: CreateSubscriptionPlanUseCase
-  ) {}
+  ) { }
 
   @Post()
   @HttpCode(201)

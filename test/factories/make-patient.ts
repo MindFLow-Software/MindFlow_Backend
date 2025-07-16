@@ -6,7 +6,7 @@ import {
   Ipatient,
   Patient,
   PatientRole,
-} from '@/core/domain/enterprise/entities/patient'
+} from '@/core/domain/main/enterprise/entities/patient'
 
 export const makePatient = async (override: Partial<Ipatient> = {}) => {
   const patient = Patient.create({

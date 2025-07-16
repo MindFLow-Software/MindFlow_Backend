@@ -7,7 +7,7 @@ import {
   Ipsychologist,
   Psychologist,
   PsychologistRole,
-} from '@/core/domain/enterprise/entities/psychologist'
+} from '@/core/domain/main/enterprise/entities/psychologist'
 
 export const makePsychologist = async (
   override: Partial<Ipsychologist> = {},

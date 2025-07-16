@@ -1,6 +1,6 @@
-import { CreateAppointmentUseCase } from '@/core/domain/application/use-cases/create-appointment'
-import { AppointmentStatus } from '@/core/domain/enterprise/entities/appointment'
-import { ZodValidationPipe } from '@/pipes/zod-validation-pipe'
+import { CreateAppointmentUseCase } from '@/core/domain/main/application/use-cases/create-appointment'
+import { AppointmentStatus } from '@/core/domain/main/enterprise/entities/appointment'
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { Body, Controller, HttpCode, Post } from '@nestjs/common'
 import z from 'zod'
 
@@ -23,7 +23,7 @@ const createAppointmentValidationPipe = new ZodValidationPipe(createAppointmentB
 export class CreateAppointmentController {
   constructor(
     private createAppointmentUseCase: CreateAppointmentUseCase
-  ) {}
+  ) { }
 
   @Post()
   @HttpCode(201)

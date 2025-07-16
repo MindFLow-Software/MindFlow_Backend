@@ -1,12 +1,12 @@
-import { AttachmentRepository } from '@/core/domain/application/repositories/attachment-repository'
-import { Attachment } from '@/core/domain/enterprise/entities/attachment'
+import { AttachmentRepository } from '@/core/domain/main/application/repositories/attachment-repository'
+import { Attachment } from '@/core/domain/main/enterprise/entities/attachment'
 import { Injectable } from '@nestjs/common'
 
 @Injectable()
 export class InMemoryAttachmentRepository implements AttachmentRepository {
   public Attachments: Attachment[] = []
 
-  constructor() {}
+  constructor() { }
 
   async create(attachment: Attachment): Promise<void> {
     this.Attachments.push(attachment)

@@ -4,7 +4,7 @@ import { faker } from '@faker-js/faker'
 import {
   Attachment,
   Iattachment,
-} from '@/core/domain/enterprise/entities/attachment'
+} from '@/core/domain/main/enterprise/entities/attachment'
 
 export const makeAttachment = async (override: Partial<Iattachment> = {}) => {
   const attachment = Attachment.create({

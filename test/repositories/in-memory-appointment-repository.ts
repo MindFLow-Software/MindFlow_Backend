@@ -1,5 +1,5 @@
-import { AppointmentRepository } from '@/core/domain/application/repositories/appointment-repository'
-import { Appointment } from '@/core/domain/enterprise/entities/appointment'
+import { AppointmentRepository } from '@/core/domain/main/application/repositories/appointment-repository'
+import { Appointment } from '@/core/domain/main/enterprise/entities/appointment'
 import { Injectable } from '@nestjs/common'
 
 @Injectable()
@@ -68,23 +68,21 @@ export class InMemoryAppointmentRepository implements AppointmentRepository {
     psychologistId: string
   }): Promise<Appointment[]> {
     const appointments = await this.appointments
-    .slice(pageIndex * perPage, (pageIndex + 1) * perPage)
-    .filter((appointment) => appointment.psychologistId === psychologistId)
-    .sort((appointmentA, appointmentB) => {
-      if (orderBy === 'desc') {
-        return (
-          appointmentB.scheduledAt.getTime() -
-          appointmentA.scheduledAt.getTime()
-        )
-      } else {
-        return (
-          appointmentA.scheduledAt.getTime() -
-          appointmentB.scheduledAt.getTime()
-        )
-      }
-    })
-
-    console.log('appointments: ', appointments)
+      .slice(pageIndex * perPage, (pageIndex + 1) * perPage)
+      .filter((appointment) => appointment.psychologistId === psychologistId)
+      .sort((appointmentA, appointmentB) => {
+        if (orderBy === 'desc') {
+          return (
+            appointmentB.scheduledAt.getTime() -
+            appointmentA.scheduledAt.getTime()
+          )
+        } else {
+          return (
+            appointmentA.scheduledAt.getTime() -
+            appointmentB.scheduledAt.getTime()
+          )
+        }
+      })
 
     return appointments
   }

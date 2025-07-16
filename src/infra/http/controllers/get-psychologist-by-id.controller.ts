@@ -1,10 +1,12 @@
 import { Controller, Get, Param } from '@nestjs/common'
-import { GetPsychologistByIdUseCase } from '@/core/domain/application/use-cases/get-psychologist-by-id'
+
 import { z } from 'zod'
-import { ZodValidationPipe } from '@/pipes/zod-validation-pipe'
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
+
+import { GetPsychologistByIdUseCase } from '@/core/domain/main/application/use-cases/get-psychologist-by-id'
 
 const getPsychologistParamsSchema = z.object({
-  id: z.string().uuid(),
+  id: z.uuid(),
 })
 
 const getPsychologistParamsValidationPipe = new ZodValidationPipe(
@@ -13,18 +15,20 @@ const getPsychologistParamsValidationPipe = new ZodValidationPipe(
 
 type IgetPsychologistParams = z.infer<typeof getPsychologistParamsSchema>
 
-@Controller()
+@Controller('/psychologists')
 export class GetPsychologistByIdController {
-  constructor(private getPsychologistById: GetPsychologistByIdUseCase) {}
+  constructor(private getPsychologistByIdUseCase: GetPsychologistByIdUseCase) {}
 
-  @Get('/psychologist:id')
+  @Get(':id')
   async handle(
     @Param(getPsychologistParamsValidationPipe) params: IgetPsychologistParams,
   ) {
     const { id } = params
 
-    this.getPsychologistById.execute({
-      id,
-    })
+    const { psychologist } = await this.getPsychologistByIdUseCase.execute({ id })
+
+    return {
+      psychologist,
+    }
   }
 }

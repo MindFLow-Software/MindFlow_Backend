@@ -1,14 +1,30 @@
-import { Controller, Get, Query } from '@nestjs/common';
-import { GetPsychologistByCrpUseCase } from '@/core/domain/application/use-cases/get-psychologist-by-crp';
+import { Controller, Get, Param } from '@nestjs/common'
 
-@Controller('psychologist')
-export class GetPatientByCrpController {
-    GetPsychologistByCrpUseCase: any;
-    constructor(private readonly getPatientByCrpUseCase: GetPsychologistByCrpUseCase) {}
+import z from 'zod'
+import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
 
-    @Get('by-crp')
-    async getByCpf(@Query('crp') crp: string) {
-        const result = await this.GetPsychologistByCrpUseCase.execute({ crp });
-        return result;
+import { GetPsychologistByCrpUseCase } from '@/core/domain/main/application/use-cases/get-psychologist-by-crp'
+
+const getPsychologistByCrpParamsSchema = z.object({
+  crp: z.string()
+})
+
+type IgetPsychologistByCrpParams = z.infer<typeof getPsychologistByCrpParamsSchema>
+
+const getPsychologistByCrpParamsValidationPipe = new ZodValidationPipe(getPsychologistByCrpParamsSchema)
+
+@Controller('/psychologists')
+export class GetPsychologistByCrpController {
+    constructor(private getPsychologistByCrpUseCase: GetPsychologistByCrpUseCase) {}
+
+    @Get(':crp')
+    async handle(@Param(getPsychologistByCrpParamsValidationPipe) params: IgetPsychologistByCrpParams) {
+      const { crp } = params
+
+      const { psychologist } = await this.getPsychologistByCrpUseCase.execute({ crp })
+
+      return {
+        psychologist,
+      }
     }
 }

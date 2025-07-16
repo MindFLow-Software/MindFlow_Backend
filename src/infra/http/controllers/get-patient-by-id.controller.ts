@@ -1,13 +1,30 @@
-import { Controller, Get, Query } from '@nestjs/common';
-import { GetPatientByIdUseCase } from '@/core/domain/application/use-cases/get-patient-by-id';
+import { Controller, Get, Param } from '@nestjs/common'
 
-@Controller('patients')
+import z from 'zod'
+import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
+
+import { GetPatientByIdUseCase } from '@/core/domain/main/application/use-cases/get-patient-by-id'
+
+const getPatientByIdParamsSchema = z.object({
+  id: z.uuid(),
+})
+
+type IgetPatientByIdParams = z.infer<typeof getPatientByIdParamsSchema>
+
+const getPatientByIdParamsValidationPipe = new ZodValidationPipe(getPatientByIdParamsSchema)
+
+@Controller('/patients')
 export class GetPatientByIdController {
-    constructor(private readonly getPatientByIdUseCase: GetPatientByIdUseCase) {}
+    constructor(private getPatientByIdUseCase: GetPatientByIdUseCase) { }
 
-    @Get('by-email')
-    async getById(@Query('id') id: string) {
-        const result = await this.getPatientByIdUseCase.execute({ id });
-        return result;
+    @Get(':id')
+    async handle(@Param(getPatientByIdParamsValidationPipe) params: IgetPatientByIdParams) {
+        const { id } = params
+
+        const { patient } = await this.getPatientByIdUseCase.execute({ id })
+        
+        return {
+          patient
+        }
     }
 }

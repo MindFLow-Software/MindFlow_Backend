@@ -9,16 +9,16 @@ import {
 
 import { z } from 'zod'
 import { hash } from 'bcryptjs'
-import { ZodValidationPipe } from '@/pipes/zod-validation-pipe'
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 
 import { PrismaService } from 'src/infra/database/prisma/prisma.service'
 
 import {
   Expertise,
   PsychologistRole,
-} from '@/core/domain/enterprise/entities/psychologist'
+} from '@/core/domain/main/enterprise/entities/psychologist'
 import { Gender } from '@/_types/enum-gender'
-import { CreatePsychologistUseCase } from '@/core/domain/application/use-cases/create-psychologist'
+import { CreatePsychologistUseCase } from '@/core/domain/main/application/use-cases/create-psychologist'
 
 const createPsychologistBodySchema = z.object({
   firstName: z.string(),
@@ -43,7 +43,7 @@ type IcreatePsychologist = z.infer<typeof createPsychologistBodySchema>
 
 @Controller('/psychologist')
 export class CreatePsychologistController {
-  constructor(private createPsychologist: CreatePsychologistUseCase) {}
+  constructor(private createPsychologist: CreatePsychologistUseCase) { }
 
   @Post()
   @HttpCode(201)

@@ -7,9 +7,9 @@ import { PassportModule } from '@nestjs/passport'
 import { Ienv } from '../../validators/env-schema'
 
 import { AuthenticateController } from '../http/controllers/authenticate.controller'
-import { AuthenticateUseCase } from '@/core/domain/application/use-cases/authenticate'
+import { AuthenticateUseCase } from '@/core/domain/main/application/use-cases/authenticate'
 
-import { LinkedInStrategy } from './linkedin.strategy';
+import { LinkedInStrategy } from './linkedin.strategy'
 
 @Module({
   imports: [
@@ -31,4 +31,4 @@ import { LinkedInStrategy } from './linkedin.strategy';
   controllers: [AuthenticateController],
   providers: [AuthenticateUseCase],
 })
-export class AuthModule {}
+export class AuthModule { }

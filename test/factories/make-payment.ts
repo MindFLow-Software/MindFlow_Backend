@@ -5,7 +5,7 @@ import {
   PaymentStatus,
   PaymentMethod,
   PaymentFrequency,
-} from '@/core/domain/enterprise/entities/payment'
+} from '@/core/domain/main/enterprise/entities/payment'
 
 export const makePayment = async (override: Partial<Ipayment> = {}) => {
   const payment = Payment.create({

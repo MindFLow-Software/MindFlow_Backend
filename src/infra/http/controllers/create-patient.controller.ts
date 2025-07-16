@@ -9,12 +9,12 @@ import {
 
 import { z } from 'zod'
 import { hash } from 'bcryptjs'
-import { ZodValidationPipe } from '@/pipes/zod-validation-pipe'
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 
 import { Gender } from '@/_types/enum-gender'
-import { PatientRole } from '@/core/domain/enterprise/entities/patient'
+import { PatientRole } from '@/core/domain/main/enterprise/entities/patient'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
-import { CreatePatientUseCase } from '@/core/domain/application/use-cases/create-patient'
+import { CreatePatientUseCase } from '@/core/domain/main/application/use-cases/create-patient'
 
 const createPatientBodySchema = z.object({
   firstName: z.string(),
@@ -37,7 +37,7 @@ type IcreatePatient = z.infer<typeof createPatientBodySchema>
 
 @Controller('/patient')
 export class CreatePatientController {
-  constructor(private createPatient: CreatePatientUseCase) {}
+  constructor(private createPatient: CreatePatientUseCase) { }
 
   @Post()
   @HttpCode(201)

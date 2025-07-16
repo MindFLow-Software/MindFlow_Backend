@@ -1,9 +1,9 @@
 import { Controller, Get, Query } from '@nestjs/common'
 
 import z from 'zod'
-import { ZodValidationPipe } from '@/pipes/zod-validation-pipe'
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 
-import { FetchPsychologistUseCase } from '@/core/domain/application/use-cases/fetch-psychologists'
+import { FetchPsychologistUseCase } from '@/core/domain/main/application/use-cases/fetch-psychologists'
 
 const fetchPsychologistsQuerySchema = z.object({
   pageIndex: z.coerce.number().default(0),
@@ -18,7 +18,7 @@ const fetchPsychologistsQueryValidationPipe = new ZodValidationPipe(fetchPsychol
 export class FetchPsychologistController {
   constructor(
     private fetchPsychologistsUseCase: FetchPsychologistUseCase
-  ) {}
+  ) { }
 
   @Get()
   async execute(@Query(fetchPsychologistsQueryValidationPipe) query: IfetchPsychologistsQuery) {

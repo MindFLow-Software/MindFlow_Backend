@@ -1,13 +1,30 @@
-import { Controller, Get, Query } from '@nestjs/common';
-import { GetPsychologistByCpfUseCase } from '@/core/domain/application/use-cases/get-psychologist-by-cpf';
+import { Controller, Get, Param } from '@nestjs/common'
 
-@Controller('psychologist')
-export class GetPatientByCpfController {
-    constructor(private readonly getPatientByCpfUseCase: GetPsychologistByCpfUseCase) {}
+import z from 'zod'
+import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
 
-    @Get('by-cpf')
-    async getByCpf(@Query('cpf') cpf: string) {
-        const result = await this.getPatientByCpfUseCase.execute({ cpf });
-        return result;
+import { GetPsychologistByCpfUseCase } from '@/core/domain/main/application/use-cases/get-psychologist-by-cpf'
+
+const getPsychologistByCpfParamsSchema = z.object({
+  cpf: z.string().min(11).max(14),
+})
+
+type IgetPsychologistByCpfParams = z.infer<typeof getPsychologistByCpfParamsSchema>
+
+const getPsychologistByCpfParamsValidationPipe = new ZodValidationPipe(getPsychologistByCpfParamsSchema)
+
+@Controller('/psychologists')
+export class GetPsychologistByCpfController {
+    constructor(private getPsychologistByCpfUseCase: GetPsychologistByCpfUseCase) {}
+
+    @Get(':cpf')
+    async handle(@Param(getPsychologistByCpfParamsValidationPipe) params: IgetPsychologistByCpfParams) {
+      const { cpf } = params
+        
+      const { psychologist } = await this.getPsychologistByCpfUseCase.execute({ cpf })
+
+      return {
+        psychologist
+      }
     }
 }

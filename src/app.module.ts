@@ -4,9 +4,10 @@ import { ConfigModule } from '@nestjs/config'
 import { envSchema } from './validators/env-schema'
 
 // Modules
-import { HttpModule } from './infra/http.module'
+import { EnvModule } from './infra/env/env.module'
+import { HttpModule } from './infra/http/http.module'
 import { AuthModule } from './infra/auth/auth.module'
-import { DatabaseModule } from './infra/database/prisma/database.module'
+import { DatabaseModule } from './infra/database/database.module'
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { DatabaseModule } from './infra/database/prisma/database.module'
       },
       isGlobal: true,
     }),
+    EnvModule,
     HttpModule,
     AuthModule,
     DatabaseModule,

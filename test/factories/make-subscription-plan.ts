@@ -4,7 +4,7 @@ import {
   IsubscriptionPlan,
   PlanInterval,
   SubscriptionPlan,
-} from '@/core/domain/enterprise/entities/subscription-plan'
+} from '@/core/domain/main/enterprise/entities/subscription-plan'
 
 export const makeSubscriptionPlan = async (
   override: Partial<IsubscriptionPlan> = {},
