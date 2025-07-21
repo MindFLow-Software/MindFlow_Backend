@@ -17,7 +17,7 @@ import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { PsychologistRepository } from '@/core/domain/main/application/repositories/psychologist-repository'
 
 const authenticateBodySchema = z.object({
-  email: z.string().email(),
+  email: z.email(),
   password: z.string().min(6),
 })
 
@@ -31,7 +31,7 @@ export class AuthenticateController {
     private authenticateUseCase: AuthenticateUseCase,
     private jwtService: JwtService,
     private psychologistsRepository: PsychologistRepository,
-  ) { }
+  ) {}
 
   @Post()
   async handle(@Body(authenticateValidationPipe) body: IauthenticateBody) {

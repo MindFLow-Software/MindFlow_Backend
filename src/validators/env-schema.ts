@@ -7,9 +7,10 @@ export const envSchema = z.object({
   PORT: z.coerce.number().default(8080),
 
   REDIS_HOST: z.string().default('127.0.0.1'),
-  REDIS_PORT: z.number().default(6379),
-  REDIS_DB_INDEX: z.number().default(0),
+  REDIS_PORT: z.coerce.number().default(6379),
+  REDIS_DB_INDEX: z.coerce.number().default(0),
 
+  AWS_BUCKET_NAME: z.string(),
   AWS_S3_REGION: z.string(),
   AWS_S3_ACCESS_KEY: z.string(),
   AWS_S3_SECRET_ACCESS_KEY: z.string(),

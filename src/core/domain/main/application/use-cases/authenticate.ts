@@ -15,7 +15,7 @@ type IauthenticateRsponse = {
 
 @Injectable()
 export class AuthenticateUseCase {
-  constructor(private psychologistRepository: PsychologistRepository) { }
+  constructor(private psychologistRepository: PsychologistRepository) {}
 
   async execute({
     email,

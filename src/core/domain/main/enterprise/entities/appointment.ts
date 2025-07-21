@@ -84,7 +84,7 @@ export class Appointment extends Entity<Iappointment> {
       createdAt: props.createdAt || new Date(),
       updatedAt: props.updatedAt || new Date(),
     })
-
+  
     return appointment
   }
 }

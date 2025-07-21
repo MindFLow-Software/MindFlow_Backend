@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common'
 
 // modules
 import { AuthModule } from 'src/infra/auth/auth.module'
+import { DatabaseModule } from '../database/database.module'
 
 // controllers
 import { AuthenticateController } from '@/infra/http/controllers/authenticate.controller'
@@ -52,7 +53,10 @@ import { GetPsychologistByEmailController } from './controllers/get-psychologist
 import { FetchAppointmentsByPsychologistIdUseCase } from '@/core/domain/main/application/use-cases/fetch-appointments-by-psychologist-id'
 
 @Module({
-  imports: [AuthModule],
+  imports: [
+    AuthModule,
+    DatabaseModule,
+  ],
   controllers: [
     AuthenticateController,
     CreateAppointmentController,
