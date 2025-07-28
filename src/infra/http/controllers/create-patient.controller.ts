@@ -13,8 +13,8 @@ import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 
 import { Gender } from '@/_types/enum-gender'
 import { PatientRole } from '@/core/domain/main/enterprise/entities/patient'
-import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { CreatePatientUseCase } from '@/core/domain/main/application/use-cases/create-patient'
+import { PrismaService } from '@/infra/database/prisma/prisma.service'
 
 const createPatientBodySchema = z.object({
   firstName: z.string(),
@@ -37,11 +37,13 @@ type IcreatePatient = z.infer<typeof createPatientBodySchema>
 
 @Controller('/patient')
 export class CreatePatientController {
-  constructor(private createPatient: CreatePatientUseCase) { }
+  constructor(
+    private createPatient: CreatePatientUseCase,
+    private prisma: PrismaService,
+  ) {}
 
   @Post()
   @HttpCode(201)
-  @UsePipes(new ZodValidationPipe(createPatientBodySchema))
   async handle(@Body(createPatientValidationPipe) body: IcreatePatient) {
     const {
       firstName,
@@ -57,8 +59,11 @@ export class CreatePatientController {
     } = body
 
     const patienttWithSameEmail =
-      await PrismaService.instance.patientt.findUnique({
-        where: { email },
+      await this.prisma.user.findUnique({
+        where: {
+          email,
+          role: 'PATIENT',
+        },
       })
 
     if (patienttWithSameEmail) {

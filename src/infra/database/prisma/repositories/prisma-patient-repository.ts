@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common'
 
-import { Patient } from '@/core/domain/main/enterprise/entities/patient'
+import { Gender, Patient, PatientRole } from '@/core/domain/main/enterprise/entities/patient'
 import { PatientRepository } from '@/core/domain/main/application/repositories/patient-repository'
+import { PrismaService } from '../prisma.service'
 
 type Ifindmany = {
   pageIndex: number
@@ -10,19 +11,93 @@ type Ifindmany = {
 
 @Injectable()
 export class PrismaPatientRepository implements PatientRepository {
-  constructor() {}
+  constructor(
+    private prisma: PrismaService,
+  ) {}
 
-  async create(patient: Patient) {}
+  async create(patient: Patient) {
+    await this.prisma.user.create({
+      data: patient, 
+    })
+  }
 
-  async save(patient: Patient) {}
+  async save(patient: Patient) {
+    await this.prisma.user.update({
+      where: {
+        id: patient.id,
+      },
+      data: patient,
+    })
+  }
 
-  async findById(id: string) {}
+  async findById(id: string) {
+    const patient = await this.prisma.user.findUnique({
+      where: {
+        id,
+      },
+    })
 
-  async findByEmail(email: string) {}
+    if (!patient) return null
 
-  async findByCpf(cpf: string) {}
+    return Patient.create({
+      ...patient,
+      role: PatientRole[patient.role],
+      gender: Gender[patient.gender],
+    })
+  }
 
-  async findMany({ pageIndex, perPage }: Ifindmany) {}
+  async findByEmail(email: string) {
+    const patient = await this.prisma.user.findUnique({
+      where: {
+        email,
+      },
+    })
 
-  async delete(id: string) {}
+    if (!patient) return null
+
+    return Patient.create({
+      ...patient,
+      role: PatientRole[patient.role],
+      gender: Gender[patient.gender],
+    })
+  }
+
+  async findByCpf(cpf: string) {
+    const patient = await this.prisma.user.findUnique({
+      where: {
+        cpf,
+      },
+    })
+
+    if (!patient) return null
+
+    return Patient.create({
+      ...patient,
+      role: PatientRole[patient.role],
+      gender: Gender[patient.gender],
+    })
+  }
+
+  async findMany({ pageIndex, perPage }: Ifindmany) {
+    const patients = await this.prisma.user.findMany({
+      take: perPage,
+      skip: pageIndex * perPage,
+    })
+
+    return patients.map((patient) => 
+      Patient.create({
+      ...patient,
+      role: PatientRole[patient.role],
+      gender: Gender[patient.gender],
+    })
+    )
+  }
+
+  async delete(id: string) {
+    await this.prisma.user.delete({
+      where: {
+        id,
+      },
+    })
+  }
 }

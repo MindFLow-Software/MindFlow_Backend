@@ -1,13 +1,13 @@
 services:
-  postgres:
+  db:
     container_name: mindflow
-    image: postgres
+    image: bitnami/postgresql
+    restart: always
     ports:
       - 5432:5432
     environment:
-      POSTGRES_USER: mindflow
-      POSTGRES_PASSWORD: docker
-      POSTGRES_DB: mindflow_db
-      PGDATA: /data/postgres
+      - POSTGRES_USER=mindflow
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_DB=mindflow_db
     volumes:
       - ./data/pg:/data/postgres

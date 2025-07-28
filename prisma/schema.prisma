@@ -71,7 +71,7 @@ model User {
   role      Role      @default(PSYCHOLOGIST)
   gender    Gender
   account   Account?
-  expertise Expertise
+  expertise Expertise?
 
   payment              Payment?
   uploadedByAttachment Attachment[] @relation("uploaded_by_attachment")

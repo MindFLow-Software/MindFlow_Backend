@@ -33,12 +33,12 @@ export type Ipsychologist = {
   id: string
   firstName: string
   lastName: string
-  email?: string
-  password?: string
+  email: string | null | undefined
+  password: string | null | undefined
   phoneNumber: string
   isActive: boolean
-  profileImageUrl?: string
-  crp?: string
+  profileImageUrl: string | null | undefined
+  crp: string | null | undefined
   dateOfBrith: Date
   cpf: string
   createdAt: Date

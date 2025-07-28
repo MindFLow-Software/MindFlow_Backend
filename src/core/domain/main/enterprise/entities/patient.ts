@@ -20,10 +20,10 @@ export type Ipatient = {
   id: string
   firstName: string
   lastName: string
-  email?: string
-  password?: string
+  email: string | null | undefined
+  password: string | null | undefined
   phoneNumber: string
-  profileImageUrl?: string
+  profileImageUrl: string | null | undefined
   dateOfBrith: Date
   cpf: string
   createdAt: Date
