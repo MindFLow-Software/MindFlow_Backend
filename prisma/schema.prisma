@@ -58,6 +58,7 @@ model User {
 
   firstName       String   @map("first_name")
   lastName        String   @map("last_name")
+  socialName      String?  @map("social_name") 
   email           String?  @unique
   password        String?
   phoneNumber     String   @db.VarChar(20)

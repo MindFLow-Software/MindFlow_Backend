@@ -63,5 +63,8 @@
     "unplugin-swc": "^1.5.5",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.2.4"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-darwin-arm64": "^4.46.1"
   }
 }
