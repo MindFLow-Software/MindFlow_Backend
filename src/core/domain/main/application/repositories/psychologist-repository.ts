@@ -6,9 +6,9 @@ type IfindMany = {
 }
 
 export abstract class PsychologistRepository {
-  createFromLinkedIn(arg0: { email: string; name: string; avatar: string | undefined }): Psychologist | PromiseLike<Psychologist | null> | null {
-    throw new Error('Method not implemented.')
-  }
+  // createFromLinkedIn(arg0: { email: string; name: string; avatar: string | undefined }): Psychologist | PromiseLike<Psychologist | null> | null {
+  //   throw new Error('Method not implemented.')
+  // }
   abstract create(psychologist: Psychologist): Promise<void>
   abstract save(psychologist: Psychologist): Promise<void>
   abstract delete(id: string): Promise<void>

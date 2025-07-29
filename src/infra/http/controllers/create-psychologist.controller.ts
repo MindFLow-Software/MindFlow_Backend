@@ -11,14 +11,13 @@ import { z } from 'zod'
 import { hash } from 'bcryptjs'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 
-import { PrismaService } from 'src/infra/database/prisma/prisma.service'
-
 import {
   Expertise,
   PsychologistRole,
 } from '@/core/domain/main/enterprise/entities/psychologist'
 import { Gender } from '@/_types/enum-gender'
 import { CreatePsychologistUseCase } from '@/core/domain/main/application/use-cases/create-psychologist'
+import { PrismaService } from '@/infra/database/prisma/prisma.service'
 
 const createPsychologistBodySchema = z.object({
   firstName: z.string(),
@@ -43,11 +42,13 @@ type IcreatePsychologist = z.infer<typeof createPsychologistBodySchema>
 
 @Controller('/psychologist')
 export class CreatePsychologistController {
-  constructor(private createPsychologist: CreatePsychologistUseCase) { }
+  constructor(
+    private createPsychologist: CreatePsychologistUseCase,
+    private prisma: PrismaService,
+  ) {}
 
   @Post()
   @HttpCode(201)
-  @UsePipes(new ZodValidationPipe(createPsychologistBodySchema))
   async handle(@Body(createUserValidationPipe) body: IcreatePsychologist) {
     const {
       firstName,
@@ -66,8 +67,11 @@ export class CreatePsychologistController {
     } = body
 
     const psychologistWithSameEmail =
-      await PrismaService.instance.psychologist.findUnique({
-        where: { email },
+      await this.prisma.user.findUnique({
+        where: {
+          email,
+          role: 'PSYCHOLOGIST',
+        },
       })
 
     if (psychologistWithSameEmail) {

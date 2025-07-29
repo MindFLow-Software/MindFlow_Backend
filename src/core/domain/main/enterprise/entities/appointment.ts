@@ -13,14 +13,14 @@ export enum AppointmentStatus {
 
 export type Iappointment = {
   id: string
-  patientId: string
-  psychologistId: string
+  patientId: string | null | undefined
+  psychologistId: string | null | undefined
   diagnosis: string
-  notes?: string
+  notes: string | null | undefined
   scheduledAt: Date
-  startedAt?: Date
-  endedAt?: Date
-  durationInMin?: number
+  startedAt: Date | null | undefined
+  endedAt: Date | null | undefined
+  durationInMin?: number | null | undefined
   status: AppointmentStatus
   createdAt: Date
   updatedAt: Date

@@ -2,14 +2,31 @@ import { Injectable } from '@nestjs/common'
 
 import { MedicalRecordRepository } from '@/core/domain/main/application/repositories/medical-record-repository'
 import { MedicalRecordAttachment } from '@/core/domain/main/enterprise/entities/medical-record-attachment'
+import { PrismaService } from '../prisma.service'
 
 @Injectable()
 export class PrismaMedicalRecordRepository implements MedicalRecordRepository {
-  constructor() {}
+  constructor(
+    private prisma: PrismaService
+  ) {}
 
-  async createMany(attachments: MedicalRecordAttachment[]) {}
+  async createMany(attachments: MedicalRecordAttachment[]) {
+    await this.prisma.attachment.updateMany({
+      where: {
+        id: attachments[0].patientId,
+      },
+      data: attachments,
+    })
+  }
 
-  async update(attachments: MedicalRecordAttachment[]) {}
+  async create(attachment: MedicalRecordAttachment) {
+    await this.prisma.attachment.update({
+      where: {
+        id: attachment.attachmentId,
+      },
+      data: attachment,
+    })
+  }
 
   async deleteMany(attachmentIds: string[]) {}
 }

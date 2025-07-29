@@ -68,13 +68,13 @@ export class AuthenticateController {
 
     let psychologist = await this.psychologistsRepository.findByEmail(linkedInUser.email)
 
-    if (!psychologist) {
-      psychologist = await this.psychologistsRepository.createFromLinkedIn({
-        email: linkedInUser.email,
-        name: linkedInUser.name,
-        avatar: linkedInUser.avatar,
-      })
-    }
+    // if (!psychologist) {
+    //   psychologist = await this.psychologistsRepository.createFromLinkedIn({
+    //     email: linkedInUser.email,
+    //     name: linkedInUser.name,
+    //     avatar: linkedInUser.avatar,
+    //   })
+    // }
 
     if (!psychologist) {
       throw new Error('Authentication failed: psychologist not found.')

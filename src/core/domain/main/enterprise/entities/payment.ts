@@ -21,9 +21,9 @@ export type Ipayment = {
   psychologistId: string
   subscriptionPlanId: string
   amount: number
-  paidAt?: Date | null
-  expiresAt?: Date
-  externalId?: string
+  paidAt: Date | null
+  expiresAt: Date | null
+  externalId: string | null
   createdAt: Date
   status: PaymentStatus
   paymentMethod: PaymentMethod
