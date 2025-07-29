@@ -14,7 +14,7 @@ type IfetchPsychologistsQuery = z.infer<typeof fetchPsychologistsQuerySchema>
 
 const fetchPsychologistsQueryValidationPipe = new ZodValidationPipe(fetchPsychologistsQuerySchema)
 
-@Controller('/psycholgists')
+@Controller('/psychologists')
 export class FetchPsychologistController {
   constructor(
     private fetchPsychologistsUseCase: FetchPsychologistUseCase
