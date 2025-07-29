@@ -23,7 +23,7 @@ const createPatientBodySchema = z.object({
   password: z.string().optional(),
   phoneNumber: z.string(),
   profileImageUrl: z.string().optional(),
-  dateOfBrith: z.date(),
+  dateOfBrith: z.coerce.date(),
   cpf: z.string(),
   role: z.enum(PatientRole),
   gender: z.enum(Gender),
@@ -67,7 +67,7 @@ export class CreatePatientController {
       })
 
     if (patienttWithSameEmail) {
-      throw new ConflictException('patientt with this email already exists')
+      throw new ConflictException('patient with this email already exists')
     }
 
     const hashedPassword = password ? await hash(password, 10) : undefined
