@@ -1,6 +1,6 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../generated/prisma"
+  // output   = "../generated/prisma"
 }
 
 datasource db {
@@ -54,6 +54,8 @@ enum Gender {
 
 model User {
   id              String   @id @default(uuid())
+  paymentId       String?  @map("payment_id")
+
   firstName       String   @map("first_name")
   lastName        String   @map("last_name")
   email           String?  @unique
@@ -63,7 +65,7 @@ model User {
   profileImageUrl String?  @map("profile_image_url")
   crp             String?  @unique @db.VarChar(10)
   dateOfBrith     DateTime @map("date_of_birth")
-  cpf             String   @unique @db.VarChar(11)
+  cpf             String   @unique @db.VarChar(14)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -74,8 +76,8 @@ model User {
   expertise Expertise?
 
   payment              Payment?
-  uploadedByAttachment Attachment[] @relation("uploaded_by_attachment")
   patientAttachment    Attachment[] @relation("patient_medical_attatchment")
+  uploadedByAttachment Attachment[] @relation("uploaded_by_attachment")
 
   patientAppointment      Appointment[] @relation("patient_appointment")
   psychologistAppointment Appointment[] @relation("psychologist_attatchment")

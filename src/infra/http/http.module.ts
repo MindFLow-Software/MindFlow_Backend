@@ -58,7 +58,6 @@ import { FetchAppointmentsByPsychologistIdUseCase } from '@/core/domain/main/app
     DatabaseModule,
   ],
   controllers: [
-    AuthenticateController,
     CreateAppointmentController,
     CreatePatientController,
     CreatePsychologistController,
@@ -82,7 +81,6 @@ import { FetchAppointmentsByPsychologistIdUseCase } from '@/core/domain/main/app
     GetSubscriptionPlanByIdController,
   ],
   providers: [
-    AuthenticateUseCase,
     CreateAppointmentUseCase,
     CreatePatientUseCase,
     CreatePsychologistUseCase,

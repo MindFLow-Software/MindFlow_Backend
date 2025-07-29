@@ -28,16 +28,17 @@ const createPsychologistBodySchema = z.object({
   isActive: z.boolean().optional().default(false),
   profileImageUrl: z.string().optional(),
   crp: z.string().optional(),
-  dateOfBrith: z.date(),
+  dateOfBrith: z.coerce.date(),
   cpf: z.string(),
-  role: z.nativeEnum(PsychologistRole),
-  gender: z.nativeEnum(Gender),
-  expertise: z.nativeEnum(Expertise),
+  role: z.enum(PsychologistRole),
+  gender: z.enum(Gender),
+  expertise: z.enum(Expertise),
 })
 
 const createUserValidationPipe = new ZodValidationPipe(
   createPsychologistBodySchema,
 )
+
 type IcreatePsychologist = z.infer<typeof createPsychologistBodySchema>
 
 @Controller('/psychologist')

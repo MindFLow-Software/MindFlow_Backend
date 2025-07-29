@@ -6,7 +6,6 @@ import { envSchema } from './validators/env-schema'
 // Modules
 import { EnvModule } from './infra/env/env.module'
 import { HttpModule } from './infra/http/http.module'
-import { AuthModule } from './infra/auth/auth.module'
 import { DatabaseModule } from './infra/database/database.module'
 
 @Module({
@@ -19,7 +18,6 @@ import { DatabaseModule } from './infra/database/database.module'
     }),
     EnvModule,
     HttpModule,
-    AuthModule,
     DatabaseModule,
   ],
 })

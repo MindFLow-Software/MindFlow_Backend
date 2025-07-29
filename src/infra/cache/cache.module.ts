@@ -7,11 +7,15 @@ import { RedisCacheRepository } from './redis/redis-cache-repository'
 @Module({
   imports: [EnvModule],
   providers: [
+    RedisService,
     {
       provide: CacheRepository,
       useClass: RedisCacheRepository,
     },
   ],
-  exports: [RedisService],
+  exports: [
+    RedisService,
+    CacheRepository,
+  ],
 })
 export class CacheModule {}

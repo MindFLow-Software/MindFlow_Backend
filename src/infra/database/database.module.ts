@@ -61,13 +61,13 @@ import { PrismaSubscriptionPlanRepository } from './prisma/repositories/prisma-s
   ],
   exports: [
     PrismaService,
-    PrismaAppointmentRepository,
-    PrismaAttachmentRepository,
-    PrismaMedicalRecordRepository,
-    PrismaPatientRepository,
-    PrismaPaymentRepository,
-    PrismaPsychologistRepository,
-    PrismaSubscriptionPlanRepository,
+    PatientRepository,
+    PaymentRepository,
+    AttachmentRepository,
+    AppointmentRepository,
+    PsychologistRepository,
+    MedicalRecordRepository,
+    SubscriptionPlanRepository,
   ],
 })
 export class DatabaseModule {}

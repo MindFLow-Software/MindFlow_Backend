@@ -6,13 +6,18 @@ import { PassportModule } from '@nestjs/passport'
 
 import { Ienv } from '../../validators/env-schema'
 
-import { AuthenticateController } from '../http/controllers/authenticate.controller'
-import { AuthenticateUseCase } from '@/core/domain/main/application/use-cases/authenticate'
+//  Modules
+import { DatabaseModule } from '../database/database.module'
 
-import { LinkedInStrategy } from './linkedin.strategy'
+//  Cntrollers
+import { AuthenticateController } from '../http/controllers/authenticate.controller'
+
+//  use-cases
+import { AuthenticateUseCase } from '@/core/domain/main/application/use-cases/authenticate'
 
 @Module({
   imports: [
+    DatabaseModule,
     PassportModule,
     JwtModule.registerAsync({
       inject: [ConfigService],
@@ -31,4 +36,4 @@ import { LinkedInStrategy } from './linkedin.strategy'
   controllers: [AuthenticateController],
   providers: [AuthenticateUseCase],
 })
-export class AuthModule { }
+export class AuthModule {}

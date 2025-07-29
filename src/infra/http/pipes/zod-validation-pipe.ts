@@ -12,6 +12,7 @@ export class ZodValidationPipe implements PipeTransform {
       return parsedValue
     } catch (error) {
       if (error instanceof ZodError) {
+        console.log('error: ', error)
         throw new BadRequestException({
           //  @ts-ignore
           errors: fromZodError(error),

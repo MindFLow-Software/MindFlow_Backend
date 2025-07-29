@@ -17,7 +17,23 @@ export class PrismaPsychologistRepository implements PsychologistRepository {
 
   async create(psychologist: Psychologist) {
     await this.prisma.user.create({
-      data: psychologist,
+      data: {
+        cpf: psychologist.cpf,
+        dateOfBrith: psychologist.dateOfBrith,
+        firstName: psychologist.firstName,
+        lastName: psychologist.lastName,
+        gender: psychologist.gender,
+        phoneNumber: psychologist.phoneNumber,
+        createdAt: psychologist.createdAt,
+        crp: psychologist.crp,
+        email: psychologist.email,
+        expertise: psychologist.expertise,
+        isActive: psychologist.isActive,
+        password: psychologist.password,
+        profileImageUrl: psychologist.profileImageUrl,
+        role: psychologist.role,
+        updatedAt: psychologist.updatedAt,
+      },  
     })
   }
 
