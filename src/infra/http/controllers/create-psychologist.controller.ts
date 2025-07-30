@@ -28,7 +28,7 @@ const createPsychologistBodySchema = z.object({
   isActive: z.boolean().optional().default(false),
   profileImageUrl: z.string().optional(),
   crp: z.string().optional(),
-  dateOfBrith: z.coerce.date(),
+  dateOfBirth: z.coerce.date(),
   cpf: z.string(),
   role: z.enum(PsychologistRole),
   gender: z.enum(Gender),
@@ -46,7 +46,7 @@ export class CreatePsychologistController {
   constructor(
     private createPsychologist: CreatePsychologistUseCase,
     private prisma: PrismaService,
-  ) {}
+  ) { }
 
   @Post()
   @HttpCode(201)
@@ -60,7 +60,7 @@ export class CreatePsychologistController {
       isActive,
       profileImageUrl,
       crp,
-      dateOfBrith,
+      dateOfBirth,
       cpf,
       role,
       gender,
@@ -90,7 +90,7 @@ export class CreatePsychologistController {
       isActive,
       profileImageUrl,
       crp,
-      dateOfBrith,
+      dateOfBirth,
       cpf,
       role,
       gender,

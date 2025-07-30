@@ -15,7 +15,7 @@ export const makePatient = async (override: Partial<Ipatient> = {}) => {
     lastName: faker.person.lastName(),
     gender: Gender.FEMININE,
     cpf: '45719845976',
-    dateOfBrith: new Date(),
+    dateOfBirth: new Date(),
     email: faker.internet.email(),
     password: await hash('123456', 8),
     phoneNumber: '11978457622',

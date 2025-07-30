@@ -24,7 +24,7 @@ export type Ipatient = {
   password: string | null | undefined
   phoneNumber: string
   profileImageUrl: string | null | undefined
-  dateOfBrith: Date
+  dateOfBirth: Date
   cpf: string
   createdAt: Date
   updatedAt: Date
@@ -63,8 +63,8 @@ export class Patient extends Entity<Ipatient> {
     return this.props.profileImageUrl
   }
 
-  get dateOfBrith() {
-    return this.props.dateOfBrith
+  get dateOfBirth() {
+    return this.props.dateOfBirth
   }
 
   get cpf() {
@@ -87,22 +87,22 @@ export class Patient extends Entity<Ipatient> {
     return this.props.gender
   }
 
-    set appointments(newAppointments: Appointment[]) {
-      this.props.appointments = newAppointments
-    }
-  
-    get appointments() {
-      return this.props.appointments
-    }
-  
+  set appointments(newAppointments: Appointment[]) {
+    this.props.appointments = newAppointments
+  }
+
+  get appointments() {
+    return this.props.appointments
+  }
+
 
   set medicalRecords(newRecords: MedicalRecordList) {
-      this.props.medicalRecords = newRecords
-    }
-  
-    get medicalRecords() {
-      return this.props.medicalRecords
-    }
+    this.props.medicalRecords = newRecords
+  }
+
+  get medicalRecords() {
+    return this.props.medicalRecords
+  }
 
   static create(props: Optional<Ipatient, 'id' | 'appointments' | 'medicalRecords' | 'createdAt' | 'updatedAt'>) {
     const patient = new Patient({

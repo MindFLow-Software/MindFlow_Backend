@@ -53,25 +53,25 @@ enum Gender {
 }
 
 model User {
-  id              String   @id @default(uuid())
-  paymentId       String?  @map("payment_id")
+  id        String  @id @default(uuid())
+  paymentId String? @map("payment_id")
 
   firstName       String   @map("first_name")
   lastName        String   @map("last_name")
-  socialName      String?  @map("social_name") 
+  socialName      String?  @map("social_name")
   email           String?  @unique
   password        String?
   phoneNumber     String   @db.VarChar(20)
   isActive        Boolean  @default(false) @map("is_Active")
   profileImageUrl String?  @map("profile_image_url")
   crp             String?  @unique @db.VarChar(10)
-  dateOfBrith     DateTime @map("date_of_birth")
+  dateOfBirth     DateTime @map("date_of_birth")
   cpf             String   @unique @db.VarChar(14)
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  role      Role      @default(PSYCHOLOGIST)
+  role      Role       @default(PSYCHOLOGIST)
   gender    Gender
   account   Account?
   expertise Expertise?

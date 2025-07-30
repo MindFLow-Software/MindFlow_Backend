@@ -39,7 +39,7 @@ export type Ipsychologist = {
   isActive: boolean
   profileImageUrl: string | null | undefined
   crp: string | null | undefined
-  dateOfBrith: Date
+  dateOfBirth: Date
   cpf: string
   createdAt: Date
   updatedAt: Date
@@ -88,8 +88,8 @@ export class Psychologist extends Entity<Ipsychologist> {
     return this.props.crp
   }
 
-  get dateOfBrith() {
-    return this.props.dateOfBrith
+  get dateOfBirth() {
+    return this.props.dateOfBirth
   }
 
   get cpf() {

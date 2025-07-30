@@ -9,7 +9,7 @@ type IcreatePatientRequest = {
   lastName: string
   phoneNumber: string
   isActive?: boolean
-  dateOfBrith: Date
+  dateOfBirth: Date
   cpf: string
   role: PatientRole
   gender: Gender
@@ -30,7 +30,7 @@ export class CreatePatientUseCase {
       password: data.password,
       phoneNumber: data.phoneNumber,
       profileImageUrl: data.profileImageUrl,
-      dateOfBrith: data.dateOfBrith,
+      dateOfBirth: data.dateOfBirth,
       cpf: data.cpf,
       role: data.role,
       gender: data.gender,

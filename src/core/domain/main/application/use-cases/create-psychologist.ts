@@ -13,7 +13,7 @@ type IcreatePsychologistRequest = {
   lastName: string
   phoneNumber: string
   isActive?: boolean
-  dateOfBrith: Date
+  dateOfBirth: Date
   cpf: string
   role: PsychologistRole
   gender: Gender
@@ -38,7 +38,7 @@ export class CreatePsychologistUseCase {
       isActive: data.isActive,
       profileImageUrl: data.profileImageUrl,
       crp: data.crp,
-      dateOfBrith: data.dateOfBrith,
+      dateOfBirth: data.dateOfBirth,
       cpf: data.cpf,
       role: data.role,
       gender: data.gender,

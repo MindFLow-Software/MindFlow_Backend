@@ -9,7 +9,7 @@ async function bootstrap() {
 
   const app = await NestFactory.create(
     AppModule,
-    { cors: { methods } }
+    { cors: { methods,  origin: ['http://localhost:3000'], credentials: true } }
   )
   const configService: ConfigService<Ienv, true> = await app.get(ConfigService)
   const port = configService.get('PORT', { infer: true })

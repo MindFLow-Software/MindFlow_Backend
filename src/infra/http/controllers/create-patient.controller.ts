@@ -23,7 +23,7 @@ const createPatientBodySchema = z.object({
   password: z.string().optional(),
   phoneNumber: z.string(),
   profileImageUrl: z.string().optional(),
-  dateOfBrith: z.coerce.date(),
+  dateOfBirth: z.coerce.date(),
   cpf: z.string(),
   role: z.enum(PatientRole),
   gender: z.enum(Gender),
@@ -40,7 +40,7 @@ export class CreatePatientController {
   constructor(
     private createPatient: CreatePatientUseCase,
     private prisma: PrismaService,
-  ) {}
+  ) { }
 
   @Post()
   @HttpCode(201)
@@ -52,11 +52,13 @@ export class CreatePatientController {
       password,
       phoneNumber,
       profileImageUrl,
-      dateOfBrith,
+      dateOfBirth,
       cpf,
       role,
       gender,
     } = body
+
+    console.log('data: ', body)
 
     const patienttWithSameEmail =
       await this.prisma.user.findUnique({
@@ -79,7 +81,7 @@ export class CreatePatientController {
       password: hashedPassword,
       phoneNumber,
       profileImageUrl,
-      dateOfBrith,
+      dateOfBirth,
       cpf,
       role,
       gender,

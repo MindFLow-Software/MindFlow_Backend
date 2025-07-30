@@ -13,13 +13,13 @@ type IfindMany = {
 export class PrismaPsychologistRepository implements PsychologistRepository {
   constructor(
     private prisma: PrismaService,
-  ) {}
+  ) { }
 
   async create(psychologist: Psychologist) {
     await this.prisma.user.create({
       data: {
         cpf: psychologist.cpf,
-        dateOfBrith: psychologist.dateOfBrith,
+        dateOfBirth: psychologist.dateOfBirth,
         firstName: psychologist.firstName,
         lastName: psychologist.lastName,
         gender: psychologist.gender,
@@ -33,7 +33,7 @@ export class PrismaPsychologistRepository implements PsychologistRepository {
         profileImageUrl: psychologist.profileImageUrl,
         role: psychologist.role,
         updatedAt: psychologist.updatedAt,
-      },  
+      },
     })
   }
 
@@ -119,7 +119,7 @@ export class PrismaPsychologistRepository implements PsychologistRepository {
   async findMany({ pageIndex, perPage }: IfindMany) {
     const psychologists = await this.prisma.user.findMany()
 
-    return psychologists.map((psychologist) => 
+    return psychologists.map((psychologist) =>
       Psychologist.create({
         ...psychologist,
         role: PsychologistRole[psychologist.role],
