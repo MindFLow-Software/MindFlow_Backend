@@ -17,7 +17,20 @@ export class PrismaPatientRepository implements PatientRepository {
 
   async create(patient: Patient) {
     await this.prisma.user.create({
-      data: patient, 
+      data: {
+        cpf: patient.cpf,
+        dateOfBirth: patient.dateOfBirth,
+        firstName: patient.firstName,
+        lastName: patient.lastName,
+        gender: patient.gender,
+        phoneNumber: patient.phoneNumber,
+        createdAt: patient.createdAt,
+        email: patient.email,
+        password: patient.password,
+        profileImageUrl: patient.profileImageUrl,
+        role: patient.role,
+        updatedAt: patient.updatedAt,
+      } 
     })
   }
 
